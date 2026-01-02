@@ -68,6 +68,9 @@ builder.Services.AddScoped<IRothConversionService, RothConversionService>();
 // Register Withdrawal Calculation Service as scoped
 builder.Services.AddScoped<IWithdrawalCalculationService, WithdrawalCalculationService>();
 
+// Register Allocation Analysis Service as scoped
+builder.Services.AddScoped<IAllocationAnalysisService, AllocationAnalysisService>();
+
 // Configure CORS
 builder.Services.AddCors(options =>
 {

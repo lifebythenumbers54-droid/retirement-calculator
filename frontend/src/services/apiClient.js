@@ -166,6 +166,43 @@ export const calculateRetirement = async (inputData) => {
 };
 
 /**
+ * Analyze portfolio allocations and return top 3 recommended strategies
+ * Includes automatic retry logic for network errors and 5xx errors
+ *
+ * @param {Object} inputData - User input data
+ * @param {number} inputData.currentAge - Current age (18-100)
+ * @param {number} inputData.retirementAge - Retirement age (>= current age)
+ * @param {number} inputData.retirementAccountBalance - 401k/IRA balance
+ * @param {number} inputData.taxableAccountBalance - Taxable account balance
+ * @param {number} inputData.successRateThreshold - Success rate (0.90, 0.95, or 0.98)
+ * @returns {Promise<Object>} Allocation analysis results with Conservative, Balanced, and Aggressive strategies
+ * @throws {Error} Formatted error with user-friendly message
+ */
+export const analyzeAllocations = async (inputData) => {
+  try {
+    const startTime = performance.now();
+
+    const response = await retryWithBackoff(async () => {
+      return await apiClient.post('/Calculation/analyze-allocations', inputData);
+    });
+
+    const endTime = performance.now();
+    const duration = endTime - startTime;
+
+    if (import.meta.env.DEV) {
+      console.log(`[API Performance] Allocation analysis completed in ${duration.toFixed(2)}ms`);
+    }
+
+    return response.data;
+  } catch (error) {
+    const userMessage = formatErrorMessage(error);
+    const enhancedError = new Error(userMessage);
+    enhancedError.originalError = error;
+    throw enhancedError;
+  }
+};
+
+/**
  * Health check endpoint to verify API connectivity
  * @returns {Promise<Object>} API status
  * @throws {Error} Formatted error with user-friendly message

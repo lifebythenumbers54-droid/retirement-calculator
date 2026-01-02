@@ -2,20 +2,35 @@ import { useState } from 'react'
 import './App.css'
 import InputForm from './components/InputForm'
 import ResultsDisplay from './components/ResultsDisplay'
+import AllocationAnalysis from './components/AllocationAnalysis'
 import ErrorBoundary from './components/ErrorBoundary'
 
 function App() {
   const [isCalculated, setIsCalculated] = useState(false)
   const [calculationResults, setCalculationResults] = useState(null)
+  const [showAllocationAnalysis, setShowAllocationAnalysis] = useState(false)
+  const [inputData, setInputData] = useState(null)
 
-  const handleCalculationComplete = (results) => {
+  const handleCalculationComplete = (results, input) => {
     setCalculationResults(results)
+    setInputData(input)
     setIsCalculated(true)
+    setShowAllocationAnalysis(false)
   }
 
   const handleCalculateAgain = () => {
     setIsCalculated(false)
     setCalculationResults(null)
+    setInputData(null)
+    setShowAllocationAnalysis(false)
+  }
+
+  const handleShowAllocationAnalysis = () => {
+    setShowAllocationAnalysis(true)
+  }
+
+  const handleBackToResults = () => {
+    setShowAllocationAnalysis(false)
   }
 
   return (
@@ -32,10 +47,16 @@ function App() {
           <div className="content-wrapper">
             {!isCalculated ? (
               <InputForm onCalculationComplete={handleCalculationComplete} />
+            ) : showAllocationAnalysis ? (
+              <AllocationAnalysis
+                inputData={inputData}
+                onBack={handleBackToResults}
+              />
             ) : (
               <ResultsDisplay
                 results={calculationResults}
                 onCalculateAgain={handleCalculateAgain}
+                onShowAllocationAnalysis={handleShowAllocationAnalysis}
               />
             )}
           </div>

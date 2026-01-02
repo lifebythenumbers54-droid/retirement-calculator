@@ -382,6 +382,62 @@
   font-weight: 600;
 }
 
+.allocation-analysis-callout {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 2px solid #3b82f6;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1);
+}
+
+.callout-icon {
+  font-size: 3rem;
+  flex-shrink: 0;
+}
+
+.callout-content {
+  flex: 1;
+}
+
+.callout-content h3 {
+  font-size: 1.4rem;
+  color: #1e40af;
+  margin-bottom: 0.5rem;
+}
+
+.callout-content p {
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.analyze-allocations-button {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+}
+
+.analyze-allocations-button:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(59, 130, 246, 0.4);
+}
+
+.analyze-allocations-button:active {
+  transform: translateY(0);
+}
+
 .calculate-again-button {
   width: 100%;
   padding: 1rem 2rem;

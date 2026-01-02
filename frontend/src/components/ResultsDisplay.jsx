@@ -1,7 +1,7 @@
 import './ResultsDisplay.css'
 import Visualization from './Visualization'
 
-function ResultsDisplay({ results, onCalculateAgain }) {
+function ResultsDisplay({ results, onCalculateAgain, onShowAllocationAnalysis }) {
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -255,6 +255,20 @@ function ResultsDisplay({ results, onCalculateAgain }) {
       </div>
 
       <Visualization results={results} />
+
+      <div className="allocation-analysis-callout">
+        <div className="callout-icon">💡</div>
+        <div className="callout-content">
+          <h3>Want to Optimize Your Portfolio Allocation?</h3>
+          <p>
+            The above results assume a 60/40 stock/bond allocation. Analyze which allocation strategy
+            might work best for your specific situation based on historical performance.
+          </p>
+          <button onClick={onShowAllocationAnalysis} className="analyze-allocations-button">
+            Analyze Optimal Portfolio Allocations
+          </button>
+        </div>
+      </div>
 
       <div className="disclaimer-section">
         <h3>⚠️ Important Disclaimer</h3>

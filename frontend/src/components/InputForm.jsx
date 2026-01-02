@@ -117,7 +117,7 @@ function InputForm({ onCalculationComplete }) {
       }
 
       const result = await calculateRetirement(payload)
-      onCalculationComplete(result)
+      onCalculationComplete(result, payload)
     } catch (error) {
       console.error('Calculation error:', error)
       setApiError(

@@ -129,6 +129,109 @@
   margin: 0;
 }
 
+.tax-breakdown-section {
+  background: rgba(100, 108, 255, 0.05);
+  border: 2px solid rgba(100, 108, 255, 0.2);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.tax-breakdown-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #646cff;
+  text-align: center;
+}
+
+.tax-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tax-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(100, 108, 255, 0.2);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.tax-card h4 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #fff;
+  border-bottom: 2px solid rgba(100, 108, 255, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+.tax-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(100, 108, 255, 0.1);
+}
+
+.tax-detail-row:last-child {
+  border-bottom: none;
+}
+
+.tax-detail-row.total {
+  font-weight: 600;
+  border-top: 2px solid rgba(100, 108, 255, 0.3);
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+}
+
+.tax-detail-row.highlight {
+  background: rgba(100, 108, 255, 0.1);
+  padding: 0.75rem;
+  margin: 0.5rem -0.5rem;
+  border-radius: 6px;
+}
+
+.tax-label {
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+.tax-value {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.tax-detail-row.total .tax-value,
+.tax-detail-row.total .tax-label {
+  color: #646cff;
+  font-size: 1.1rem;
+}
+
+.tax-detail-row.highlight .tax-value {
+  color: #4ade80;
+  font-size: 1.2rem;
+}
+
+.tax-strategy-note {
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.tax-strategy-note p {
+  margin: 0;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+.tax-strategy-note strong {
+  color: #4ade80;
+}
+
 .info-section {
   background: rgba(100, 108, 255, 0.05);
   border: 2px solid rgba(100, 108, 255, 0.2);
@@ -275,6 +378,55 @@
     color: #666;
   }
 
+  .tax-breakdown-section {
+    background: rgba(83, 91, 242, 0.05);
+    border-color: rgba(83, 91, 242, 0.2);
+  }
+
+  .tax-breakdown-section h3 {
+    color: #535bf2;
+  }
+
+  .tax-card {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: rgba(83, 91, 242, 0.2);
+  }
+
+  .tax-card h4 {
+    color: #213547;
+    border-bottom-color: rgba(83, 91, 242, 0.3);
+  }
+
+  .tax-label {
+    color: #666;
+  }
+
+  .tax-value {
+    color: #213547;
+  }
+
+  .tax-detail-row.total .tax-value,
+  .tax-detail-row.total .tax-label {
+    color: #535bf2;
+  }
+
+  .tax-detail-row.highlight .tax-value {
+    color: #22c55e;
+  }
+
+  .tax-strategy-note {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+  }
+
+  .tax-strategy-note p {
+    color: #333;
+  }
+
+  .tax-strategy-note strong {
+    color: #16a34a;
+  }
+
   .info-section {
     background: rgba(83, 91, 242, 0.05);
     border-color: rgba(83, 91, 242, 0.2);
@@ -338,6 +490,26 @@
 
   .result-value {
     font-size: 1.5rem;
+  }
+
+  .tax-breakdown-section {
+    padding: 1.5rem;
+  }
+
+  .tax-breakdown-section h3 {
+    font-size: 1.3rem;
+  }
+
+  .tax-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tax-card {
+    padding: 1rem;
+  }
+
+  .tax-card h4 {
+    font-size: 1rem;
   }
 
   .info-section {

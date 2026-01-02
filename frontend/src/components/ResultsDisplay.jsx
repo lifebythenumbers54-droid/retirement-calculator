@@ -49,15 +49,6 @@ function ResultsDisplay({ results, onCalculateAgain }) {
           </div>
         </div>
 
-        <div className="result-card">
-          <div className="result-icon">🧾</div>
-          <div className="result-content">
-            <h3>Estimated Annual Taxes</h3>
-            <p className="result-value">{formatCurrency(results.estimatedAnnualTaxes)}</p>
-            <p className="result-description">Approximate tax liability</p>
-          </div>
-        </div>
-
         <div className="result-card highlight">
           <div className="result-icon">✅</div>
           <div className="result-content">
@@ -89,6 +80,53 @@ function ResultsDisplay({ results, onCalculateAgain }) {
             <p className="result-value">{results.numberOfScenariosSimulated.toLocaleString()}</p>
             <p className="result-description">Historical data points analyzed</p>
           </div>
+        </div>
+      </div>
+
+      <div className="tax-breakdown-section">
+        <h3>Tax Breakdown & Withdrawal Strategy</h3>
+        <div className="tax-grid">
+          <div className="tax-card">
+            <h4>Tax-Optimized Withdrawal Sources</h4>
+            <div className="tax-detail-row">
+              <span className="tax-label">From Taxable Accounts:</span>
+              <span className="tax-value">{formatCurrency(results.taxableAccountWithdrawal)}</span>
+            </div>
+            <div className="tax-detail-row">
+              <span className="tax-label">From Tax-Deferred Accounts:</span>
+              <span className="tax-value">{formatCurrency(results.taxDeferredAccountWithdrawal)}</span>
+            </div>
+            <div className="tax-detail-row total">
+              <span className="tax-label">Total Withdrawal:</span>
+              <span className="tax-value">{formatCurrency(results.annualGrossWithdrawal)}</span>
+            </div>
+          </div>
+
+          <div className="tax-card">
+            <h4>Tax Calculation Details</h4>
+            <div className="tax-detail-row">
+              <span className="tax-label">Ordinary Income Tax:</span>
+              <span className="tax-value">{formatCurrency(results.ordinaryIncomeTax)}</span>
+            </div>
+            <div className="tax-detail-row">
+              <span className="tax-label">Long-Term Capital Gains Tax:</span>
+              <span className="tax-value">{formatCurrency(results.capitalGainsTax)}</span>
+            </div>
+            <div className="tax-detail-row total">
+              <span className="tax-label">Total Tax:</span>
+              <span className="tax-value">{formatCurrency(results.estimatedAnnualTaxes)}</span>
+            </div>
+            <div className="tax-detail-row highlight">
+              <span className="tax-label">Effective Tax Rate:</span>
+              <span className="tax-value">{formatPercentage(results.effectiveTaxRate)}</span>
+            </div>
+          </div>
+        </div>
+        <div className="tax-strategy-note">
+          <p>
+            <strong>Tax Optimization:</strong> Our strategy minimizes your tax burden by withdrawing from tax-deferred
+            accounts up to the 12% tax bracket, then using taxable accounts to benefit from lower capital gains rates.
+          </p>
         </div>
       </div>
 

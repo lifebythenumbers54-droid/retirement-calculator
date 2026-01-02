@@ -5,23 +5,20 @@ namespace RetirementCalculator.API.Services;
 public class WithdrawalCalculationService : IWithdrawalCalculationService
 {
     private readonly IHistoricalDataService _historicalDataService;
+    private readonly ITaxCalculationService _taxCalculationService;
     private readonly ILogger<WithdrawalCalculationService> _logger;
 
     // Default portfolio allocation
     private const decimal STOCK_ALLOCATION = 0.60m;
     private const decimal BOND_ALLOCATION = 0.40m;
 
-    // Tax calculation constants (simplified federal tax brackets for 2024)
-    private const decimal STANDARD_DEDUCTION_SINGLE = 14600m;
-    private const decimal TAX_BRACKET_10_LIMIT = 11600m;
-    private const decimal TAX_BRACKET_12_LIMIT = 47150m;
-    private const decimal TAX_BRACKET_22_LIMIT = 100525m;
-
     public WithdrawalCalculationService(
         IHistoricalDataService historicalDataService,
+        ITaxCalculationService taxCalculationService,
         ILogger<WithdrawalCalculationService> logger)
     {
         _historicalDataService = historicalDataService;
+        _taxCalculationService = taxCalculationService;
         _logger = logger;
     }
 
@@ -43,26 +40,43 @@ public class WithdrawalCalculationService : IWithdrawalCalculationService
             userInput.SuccessRateThreshold * 100); // Convert to percentage
 
         var annualGrossWithdrawal = totalBalance * optimalWithdrawalRate;
-        var estimatedTaxes = CalculateEstimatedTaxes(
+
+        // Calculate tax-optimized withdrawal amounts from each account
+        var (taxableWithdrawal, taxDeferredWithdrawal) = CalculateTaxOptimizedWithdrawal(
             annualGrossWithdrawal,
-            userInput.RetirementAccountBalance,
-            totalBalance);
+            userInput.TaxableAccountBalance,
+            userInput.RetirementAccountBalance);
+
+        // Calculate detailed tax breakdown
+        var ordinaryIncomeTax = _taxCalculationService.CalculateOrdinaryIncomeTax(taxDeferredWithdrawal);
+        var capitalGainsTax = _taxCalculationService.CalculateLongTermCapitalGainsTax(taxableWithdrawal, taxDeferredWithdrawal);
+        var totalTax = ordinaryIncomeTax + capitalGainsTax;
+        var effectiveTaxRate = annualGrossWithdrawal > 0 ? (totalTax / annualGrossWithdrawal) * 100 : 0;
 
         var result = new CalculationResult
         {
             WithdrawalRate = optimalWithdrawalRate * 100, // Convert to percentage
             AnnualGrossWithdrawal = annualGrossWithdrawal,
-            EstimatedAnnualTaxes = estimatedTaxes,
-            NetAnnualIncome = annualGrossWithdrawal - estimatedTaxes,
+            EstimatedAnnualTaxes = totalTax,
+            NetAnnualIncome = annualGrossWithdrawal - totalTax,
             AchievedSuccessRate = await CalculateSuccessRate(totalBalance, retirementYearsExpected, optimalWithdrawalRate),
-            NumberOfScenariosSimulated = GetNumberOfScenarios(retirementYearsExpected)
+            NumberOfScenariosSimulated = GetNumberOfScenarios(retirementYearsExpected),
+            TaxableAccountWithdrawal = taxableWithdrawal,
+            TaxDeferredAccountWithdrawal = taxDeferredWithdrawal,
+            OrdinaryIncomeTax = ordinaryIncomeTax,
+            CapitalGainsTax = capitalGainsTax,
+            EffectiveTaxRate = effectiveTaxRate
         };
 
         _logger.LogInformation(
-            "Calculation complete: {WithdrawalRate}% withdrawal rate, {SuccessRate}% success rate over {Scenarios} scenarios",
+            "Calculation complete: {WithdrawalRate}% withdrawal rate, {SuccessRate}% success rate over {Scenarios} scenarios, " +
+            "TaxableWithdrawal=${TaxableWithdrawal}, TaxDeferredWithdrawal=${TaxDeferredWithdrawal}, EffectiveTaxRate={EffectiveTaxRate}%",
             result.WithdrawalRate,
             result.AchievedSuccessRate,
-            result.NumberOfScenariosSimulated);
+            result.NumberOfScenariosSimulated,
+            taxableWithdrawal,
+            taxDeferredWithdrawal,
+            effectiveTaxRate);
 
         return result;
     }
@@ -184,47 +198,50 @@ public class WithdrawalCalculationService : IWithdrawalCalculationService
         return Math.Max(0, maxYear - minYear - retirementYears + 1);
     }
 
-    private decimal CalculateEstimatedTaxes(
-        decimal annualWithdrawal,
-        decimal retirementAccountBalance,
-        decimal totalBalance)
+    /// <summary>
+    /// Calculates the tax-optimized withdrawal amounts from taxable and tax-deferred accounts.
+    /// Strategy: Fill lower tax brackets with tax-deferred income first, then use taxable account
+    /// to benefit from lower capital gains rates.
+    /// </summary>
+    private (decimal taxableWithdrawal, decimal taxDeferredWithdrawal) CalculateTaxOptimizedWithdrawal(
+        decimal totalWithdrawalNeeded,
+        decimal taxableAccountBalance,
+        decimal taxDeferredAccountBalance)
     {
-        // Calculate proportion of withdrawal from tax-deferred accounts
-        decimal taxDeferredProportion = totalBalance > 0
-            ? retirementAccountBalance / totalBalance
-            : 0;
-
-        decimal taxableIncome = annualWithdrawal * taxDeferredProportion;
-
-        // Subtract standard deduction
-        decimal taxableIncomeAfterDeduction = Math.Max(0, taxableIncome - STANDARD_DEDUCTION_SINGLE);
-
-        decimal tax = 0;
-
-        // Calculate tax using simplified federal brackets
-        if (taxableIncomeAfterDeduction <= TAX_BRACKET_10_LIMIT)
+        // If one account is empty, withdraw from the other
+        if (taxDeferredAccountBalance <= 0)
         {
-            tax = taxableIncomeAfterDeduction * 0.10m;
+            return (totalWithdrawalNeeded, 0m);
         }
-        else if (taxableIncomeAfterDeduction <= TAX_BRACKET_12_LIMIT)
+        if (taxableAccountBalance <= 0)
         {
-            tax = TAX_BRACKET_10_LIMIT * 0.10m +
-                  (taxableIncomeAfterDeduction - TAX_BRACKET_10_LIMIT) * 0.12m;
-        }
-        else if (taxableIncomeAfterDeduction <= TAX_BRACKET_22_LIMIT)
-        {
-            tax = TAX_BRACKET_10_LIMIT * 0.10m +
-                  (TAX_BRACKET_12_LIMIT - TAX_BRACKET_10_LIMIT) * 0.12m +
-                  (taxableIncomeAfterDeduction - TAX_BRACKET_12_LIMIT) * 0.22m;
-        }
-        else
-        {
-            tax = TAX_BRACKET_10_LIMIT * 0.10m +
-                  (TAX_BRACKET_12_LIMIT - TAX_BRACKET_10_LIMIT) * 0.12m +
-                  (TAX_BRACKET_22_LIMIT - TAX_BRACKET_12_LIMIT) * 0.22m +
-                  (taxableIncomeAfterDeduction - TAX_BRACKET_22_LIMIT) * 0.24m;
+            return (0m, totalWithdrawalNeeded);
         }
 
-        return tax;
+        // Strategy: Withdraw from tax-deferred account up to the top of the 12% bracket
+        // (which is effectively ~0% after standard deduction), then use taxable account for the rest
+        // to benefit from 0% or 15% LTCG rates
+
+        decimal standardDeduction = _taxCalculationService.GetStandardDeduction();
+
+        // Optimal amount to withdraw from tax-deferred: enough to fill up to ~12% bracket
+        // This is approximately the standard deduction + first two tax brackets
+        decimal optimalTaxDeferredWithdrawal = Math.Min(
+            standardDeduction + 48475m, // Standard deduction + 12% bracket limit
+            Math.Min(totalWithdrawalNeeded, taxDeferredAccountBalance));
+
+        // Remaining withdrawal comes from taxable account
+        decimal taxableWithdrawal = Math.Min(
+            totalWithdrawalNeeded - optimalTaxDeferredWithdrawal,
+            taxableAccountBalance);
+
+        // If taxable account can't cover the rest, take more from tax-deferred
+        decimal taxDeferredWithdrawal = totalWithdrawalNeeded - taxableWithdrawal;
+
+        _logger.LogDebug(
+            "Tax-optimized withdrawal: Total={Total}, Taxable={Taxable}, TaxDeferred={TaxDeferred}",
+            totalWithdrawalNeeded, taxableWithdrawal, taxDeferredWithdrawal);
+
+        return (taxableWithdrawal, taxDeferredWithdrawal);
     }
 }

@@ -34,4 +34,29 @@ public class CalculationResult
     /// Number of historical scenarios simulated in the calculation
     /// </summary>
     public int NumberOfScenariosSimulated { get; set; }
+
+    /// <summary>
+    /// Annual withdrawal amount from taxable accounts (subject to capital gains tax)
+    /// </summary>
+    public decimal TaxableAccountWithdrawal { get; set; }
+
+    /// <summary>
+    /// Annual withdrawal amount from tax-deferred accounts (subject to ordinary income tax)
+    /// </summary>
+    public decimal TaxDeferredAccountWithdrawal { get; set; }
+
+    /// <summary>
+    /// Ordinary income tax on tax-deferred withdrawals
+    /// </summary>
+    public decimal OrdinaryIncomeTax { get; set; }
+
+    /// <summary>
+    /// Capital gains tax on taxable account withdrawals
+    /// </summary>
+    public decimal CapitalGainsTax { get; set; }
+
+    /// <summary>
+    /// Effective tax rate as a percentage of gross withdrawal
+    /// </summary>
+    public decimal EffectiveTaxRate { get; set; }
 }

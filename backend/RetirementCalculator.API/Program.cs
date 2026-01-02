@@ -10,6 +10,9 @@ builder.Services.AddSwaggerGen();
 // Register Historical Data Service as singleton (load once at startup)
 builder.Services.AddSingleton<IHistoricalDataService, HistoricalDataService>();
 
+// Register Tax Calculation Service as scoped
+builder.Services.AddScoped<ITaxCalculationService, TaxCalculationService>();
+
 // Register Withdrawal Calculation Service as scoped
 builder.Services.AddScoped<IWithdrawalCalculationService, WithdrawalCalculationService>();
 

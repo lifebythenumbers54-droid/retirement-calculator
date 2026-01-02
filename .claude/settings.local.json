@@ -23,7 +23,14 @@
       "Bash(dotnet run:*)",
       "Bash(curl:*)",
       "Bash(npm run dev:*)",
-      "Bash(npm install)"
+      "Bash(npm install)",
+      "Bash(powershell -Command \"Get-Process | Where-Object {$_ProcessName -like ''*RetirementCalculator*'' -or ($_ProcessName -eq ''dotnet'' -and $_MainWindowTitle -like ''*RetirementCalculator*'')} | Stop-Process -Force -ErrorAction SilentlyContinue; Write-Host ''Processes cleaned up''\")",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(dir backendRetirementCalculator.APIdatahistorical_market_data.json)",
+      "Bash(timeout /t 5 /nobreak)",
+      "Bash(ping:*)",
+      "Bash(timeout /t 8 /nobreak)"
     ]
   }
 }

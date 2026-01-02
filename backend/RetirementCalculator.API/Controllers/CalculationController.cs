@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using RetirementCalculator.API.Models;
+using RetirementCalculator.API.Services;
 
 namespace RetirementCalculator.API.Controllers;
 
@@ -11,10 +12,14 @@ namespace RetirementCalculator.API.Controllers;
 public class CalculationController : ControllerBase
 {
     private readonly ILogger<CalculationController> _logger;
+    private readonly IWithdrawalCalculationService _calculationService;
 
-    public CalculationController(ILogger<CalculationController> logger)
+    public CalculationController(
+        ILogger<CalculationController> logger,
+        IWithdrawalCalculationService calculationService)
     {
         _logger = logger;
+        _calculationService = calculationService;
     }
 
     /// <summary>
@@ -29,8 +34,10 @@ public class CalculationController : ControllerBase
     [ProducesResponseType(typeof(CalculationResult), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public IActionResult Calculate([FromBody] UserInput userInput)
+    public async Task<IActionResult> Calculate([FromBody] UserInput userInput)
     {
+        var startTime = DateTime.UtcNow;
+
         try
         {
             _logger.LogInformation(
@@ -58,35 +65,25 @@ public class CalculationController : ControllerBase
                 return BadRequest(ModelState);
             }
 
-            // For Milestone 1: Return mock calculation results
-            // This will be replaced with actual calculation logic in future milestones
-            var totalBalance = userInput.RetirementAccountBalance + userInput.TaxableAccountBalance;
-            var withdrawalRate = 4.0m; // Mock 4% withdrawal rate
-            var annualGrossWithdrawal = totalBalance * (withdrawalRate / 100);
-            var estimatedTaxes = annualGrossWithdrawal * 0.15m; // Mock 15% tax rate
-            var netIncome = annualGrossWithdrawal - estimatedTaxes;
+            // Perform actual calculation using historical data
+            var result = await _calculationService.CalculateWithdrawalStrategy(userInput);
 
-            var result = new CalculationResult
-            {
-                WithdrawalRate = withdrawalRate,
-                AnnualGrossWithdrawal = annualGrossWithdrawal,
-                EstimatedAnnualTaxes = estimatedTaxes,
-                NetAnnualIncome = netIncome,
-                AchievedSuccessRate = userInput.SuccessRateThreshold * 100, // Convert to percentage
-                NumberOfScenariosSimulated = 100 // Mock value
-            };
+            var duration = (DateTime.UtcNow - startTime).TotalMilliseconds;
 
             _logger.LogInformation(
-                "Calculation completed successfully - WithdrawalRate: {WithdrawalRate}%, " +
-                "AnnualGrossWithdrawal: {AnnualGrossWithdrawal}, NetAnnualIncome: {NetAnnualIncome}",
-                result.WithdrawalRate, result.AnnualGrossWithdrawal, result.NetAnnualIncome
+                "Calculation completed successfully in {Duration}ms - WithdrawalRate: {WithdrawalRate}%, " +
+                "AnnualGrossWithdrawal: {AnnualGrossWithdrawal}, NetAnnualIncome: {NetAnnualIncome}, " +
+                "AchievedSuccessRate: {AchievedSuccessRate}%",
+                duration, result.WithdrawalRate, result.AnnualGrossWithdrawal,
+                result.NetAnnualIncome, result.AchievedSuccessRate
             );
 
             return Ok(result);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred while processing the calculation request");
+            var duration = (DateTime.UtcNow - startTime).TotalMilliseconds;
+            _logger.LogError(ex, "An error occurred while processing the calculation request after {Duration}ms", duration);
             return StatusCode(StatusCodes.Status500InternalServerError, new
             {
                 message = "An error occurred while processing your request. Please try again later.",

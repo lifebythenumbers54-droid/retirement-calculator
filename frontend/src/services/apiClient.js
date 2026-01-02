@@ -19,7 +19,7 @@ const API_BASE_URL = '/api';
  */
 export const calculateRetirement = async (inputData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/calculate`, inputData);
+    const response = await axios.post(`${API_BASE_URL}/Calculation`, inputData);
     return response.data;
   } catch (error) {
     console.error('Error calculating retirement:', error);

@@ -14,6 +14,18 @@ function ResultsDisplay({ results, onCalculateAgain }) {
     return `${value.toFixed(2)}%`
   }
 
+  const getSuccessRateColor = (rate) => {
+    if (rate >= 95) return 'success-high'
+    if (rate >= 90) return 'success-medium'
+    return 'success-low'
+  }
+
+  const getSuccessRateLabel = (rate) => {
+    if (rate >= 95) return 'Excellent'
+    if (rate >= 90) return 'Good'
+    return 'Moderate'
+  }
+
   return (
     <div className="results-display-container">
       <h2>Your Retirement Withdrawal Strategy</h2>
@@ -55,12 +67,18 @@ function ResultsDisplay({ results, onCalculateAgain }) {
           </div>
         </div>
 
-        <div className="result-card">
+        <div className={`result-card ${getSuccessRateColor(results.achievedSuccessRate)}`}>
           <div className="result-icon">🎯</div>
           <div className="result-content">
             <h3>Success Rate Achieved</h3>
             <p className="result-value">{formatPercentage(results.achievedSuccessRate)}</p>
-            <p className="result-description">Probability of success</p>
+            <p className="result-description">{getSuccessRateLabel(results.achievedSuccessRate)} probability</p>
+            <div className="progress-bar" role="progressbar" aria-valuenow={results.achievedSuccessRate} aria-valuemin="0" aria-valuemax="100">
+              <div
+                className={`progress-fill ${getSuccessRateColor(results.achievedSuccessRate)}`}
+                style={{ width: `${results.achievedSuccessRate}%` }}
+              ></div>
+            </div>
           </div>
         </div>
 
@@ -91,9 +109,22 @@ function ResultsDisplay({ results, onCalculateAgain }) {
           </li>
           <li>
             These results are based on <strong>{results.numberOfScenariosSimulated}</strong> historical
-            market scenarios
+            market scenarios from 1925-2024
           </li>
         </ul>
+      </div>
+
+      <div className="disclaimer-section">
+        <h3>⚠️ Important Disclaimer</h3>
+        <p>
+          These calculations are based on historical market data and assume a 60/40 stock/bond portfolio allocation.
+          <strong> Past performance does not guarantee future results.</strong> Actual returns may vary significantly
+          due to market volatility, economic conditions, and individual circumstances.
+        </p>
+        <p>
+          This tool provides estimates only and should not be considered financial advice. Please consult with a
+          qualified financial advisor before making retirement decisions.
+        </p>
       </div>
 
       <button onClick={onCalculateAgain} className="calculate-again-button">

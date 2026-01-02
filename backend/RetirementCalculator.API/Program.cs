@@ -1,9 +1,17 @@
+using RetirementCalculator.API.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Register Historical Data Service as singleton (load once at startup)
+builder.Services.AddSingleton<IHistoricalDataService, HistoricalDataService>();
+
+// Register Withdrawal Calculation Service as scoped
+builder.Services.AddScoped<IWithdrawalCalculationService, WithdrawalCalculationService>();
 
 // Configure CORS
 builder.Services.AddCors(options =>

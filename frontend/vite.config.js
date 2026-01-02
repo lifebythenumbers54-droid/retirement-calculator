@@ -13,5 +13,25 @@ export default defineConfig({
         secure: false,
       }
     }
+  },
+  build: {
+    // Optimize chunk size for better performance
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Separate vendor chunks for better caching
+          'react-vendor': ['react', 'react-dom'],
+          'charts': ['recharts']
+        }
+      }
+    },
+    // Increase chunk size warning limit
+    chunkSizeWarningLimit: 1000,
+    // Minify for production using esbuild (faster than terser)
+    minify: 'esbuild'
+  },
+  // Performance optimizations
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'axios', 'recharts']
   }
 })

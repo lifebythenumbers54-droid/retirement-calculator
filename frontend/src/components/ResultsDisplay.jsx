@@ -1,4 +1,5 @@
 import './ResultsDisplay.css'
+import Visualization from './Visualization'
 
 function ResultsDisplay({ results, onCalculateAgain }) {
   const formatCurrency = (value) => {
@@ -178,6 +179,8 @@ function ResultsDisplay({ results, onCalculateAgain }) {
           </li>
         </ul>
       </div>
+
+      <Visualization results={results} />
 
       <div className="disclaimer-section">
         <h3>⚠️ Important Disclaimer</h3>

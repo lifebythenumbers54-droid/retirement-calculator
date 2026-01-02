@@ -152,12 +152,12 @@ namespace RetirementCalculator.API.Services
                 {
                     RiskProfile = riskProfileName,
                     RequiredPortfolioSize = Math.Round(requiredPortfolio, 2),
-                    WithdrawalRate = Math.Round(withdrawalResult.WithdrawalRate * 100, 2), // Convert to percentage
+                    WithdrawalRate = Math.Round(withdrawalResult.WithdrawalRate, 2), // Already a percentage from CalculationResult
                     AnnualPreTaxWithdrawal = Math.Round(grossWithdrawal, 2),
                     AnnualAfterTaxIncome = Math.Round(afterTaxIncome, 2),
                     EstimatedAnnualTaxes = Math.Round(taxes, 2),
                     EffectiveTaxRate = grossWithdrawal > 0 ? Math.Round((taxes / grossWithdrawal) * 100, 2) : 0,
-                    HistoricalSuccessRate = Math.Round(withdrawalResult.AchievedSuccessRate * 100, 2),
+                    HistoricalSuccessRate = Math.Round(withdrawalResult.AchievedSuccessRate, 2), // Already a percentage from CalculationResult
                     StockAllocationPercent = (int)(stockAllocation * 100),
                     BondAllocationPercent = (int)((1 - stockAllocation) * 100),
                     MedianFinalPortfolioValue = Math.Round(stats.MedianFinalValue, 2),

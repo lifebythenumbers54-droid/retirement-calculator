@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { calculateRetirement } from '../services/apiClient'
 import './InputForm.css'
 
-function InputForm({ onCalculationComplete }) {
+function InputForm({ onCalculationComplete, initialData }) {
   const [formData, setFormData] = useState({
     currentAge: '',
     retirementAge: '',
@@ -10,6 +10,19 @@ function InputForm({ onCalculationComplete }) {
     taxableAccountBalance: '',
     successRateThreshold: '0.95'
   })
+
+  // Prefill form with initialData when provided (e.g., when "Calculate Again" is clicked)
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        currentAge: initialData.currentAge?.toString() || '',
+        retirementAge: initialData.retirementAge?.toString() || '',
+        retirementAccountBalance: initialData.retirementAccountBalance?.toString() || '',
+        taxableAccountBalance: initialData.taxableAccountBalance?.toString() || '',
+        successRateThreshold: initialData.successRateThreshold?.toString() || '0.95'
+      })
+    }
+  }, [initialData])
 
   const [errors, setErrors] = useState({})
   const [isLoading, setIsLoading] = useState(false)

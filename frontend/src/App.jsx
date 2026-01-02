@@ -24,7 +24,7 @@ function App() {
   const handleCalculateAgain = () => {
     setIsCalculated(false)
     setCalculationResults(null)
-    setInputData(null)
+    // Keep inputData to prefill the form with previous values
     setShowAllocationAnalysis(false)
   }
 
@@ -80,7 +80,7 @@ function App() {
             {calculatorMode === 'standard' ? (
               // Standard Calculator Flow
               !isCalculated ? (
-                <InputForm onCalculationComplete={handleCalculationComplete} />
+                <InputForm onCalculationComplete={handleCalculationComplete} initialData={inputData} />
               ) : showAllocationAnalysis ? (
                 <AllocationAnalysis
                   inputData={inputData}
@@ -96,7 +96,7 @@ function App() {
             ) : (
               // Reverse Calculator Flow
               !isCalculated ? (
-                <ReverseInputForm onCalculationComplete={handleCalculationComplete} />
+                <ReverseInputForm onCalculationComplete={handleCalculationComplete} initialData={inputData} />
               ) : (
                 <ReverseResultsDisplay
                   results={calculationResults}

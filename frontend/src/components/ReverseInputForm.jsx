@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { calculateReverseRetirement } from '../services/apiClient';
 
-const ReverseInputForm = ({ onCalculationComplete }) => {
+const ReverseInputForm = ({ onCalculationComplete, initialData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState(null);
   const [formData, setFormData] = useState({
@@ -16,6 +16,21 @@ const ReverseInputForm = ({ onCalculationComplete }) => {
   });
 
   const [errors, setErrors] = useState({});
+
+  // Prefill form with initialData when provided (e.g., when "Calculate Again" is clicked)
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        desiredAfterTaxIncome: initialData.desiredAfterTaxIncome?.toString() || '60000',
+        currentAge: initialData.currentAge?.toString() || '30',
+        retirementAge: initialData.retirementAge?.toString() || '65',
+        successRateThreshold: initialData.successRateThreshold?.toString() || '0.90',
+        currentRetirementAccountBalance: initialData.currentRetirementAccountBalance?.toString() || '',
+        currentTaxableAccountBalance: initialData.currentTaxableAccountBalance?.toString() || '',
+        annualSavings: initialData.annualSavings?.toString() || ''
+      });
+    }
+  }, [initialData]);
 
   const formatCurrency = (value) => {
     const number = parseFloat(value.replace(/[^0-9.-]+/g, ''));
@@ -358,7 +373,16 @@ const ReverseInputForm = ({ onCalculationComplete }) => {
 };
 
 ReverseInputForm.propTypes = {
-  onCalculationComplete: PropTypes.func.isRequired
+  onCalculationComplete: PropTypes.func.isRequired,
+  initialData: PropTypes.shape({
+    desiredAfterTaxIncome: PropTypes.number,
+    currentAge: PropTypes.number,
+    retirementAge: PropTypes.number,
+    successRateThreshold: PropTypes.number,
+    currentRetirementAccountBalance: PropTypes.number,
+    currentTaxableAccountBalance: PropTypes.number,
+    annualSavings: PropTypes.number
+  })
 };
 
 export default ReverseInputForm;

@@ -34,7 +34,10 @@
       "Bash(powershell -Command:*)",
       "Bash(dir:*)",
       "Bash(npm run build:*)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(find:*)",
+      "Bash(tasklist:*)"
     ]
-  }
+  },
+  "model": "opus"
 }

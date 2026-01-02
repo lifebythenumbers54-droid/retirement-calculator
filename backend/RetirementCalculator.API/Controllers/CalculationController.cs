@@ -14,15 +14,18 @@ public class CalculationController : ControllerBase
     private readonly ILogger<CalculationController> _logger;
     private readonly IWithdrawalCalculationService _calculationService;
     private readonly IEarlyRetirementService _earlyRetirementService;
+    private readonly IRothConversionService _rothConversionService;
 
     public CalculationController(
         ILogger<CalculationController> logger,
         IWithdrawalCalculationService calculationService,
-        IEarlyRetirementService earlyRetirementService)
+        IEarlyRetirementService earlyRetirementService,
+        IRothConversionService rothConversionService)
     {
         _logger = logger;
         _calculationService = calculationService;
         _earlyRetirementService = earlyRetirementService;
+        _rothConversionService = rothConversionService;
     }
 
     /// <summary>
@@ -82,6 +85,18 @@ public class CalculationController : ControllerBase
             result.YearsWithPenalty = yearsWithPenalty;
             result.PenaltyWarning = _earlyRetirementService.GetPenaltyWarning(userInput.RetirementAge);
             result.PenaltyExplanation = _earlyRetirementService.GetPenaltyExplanation(yearsWithPenalty, totalPenalty);
+
+            // Evaluate Roth conversion ladder strategy if early retirement detected
+            if (yearsWithPenalty > 0)
+            {
+                result.RothConversionAnalysis = _rothConversionService.EvaluateConversionStrategy(
+                    userInput.RetirementAge,
+                    result.AnnualGrossWithdrawal,
+                    result.TaxDeferredAccountWithdrawal,
+                    result.OrdinaryIncomeTax,
+                    totalPenalty,
+                    yearsWithPenalty);
+            }
 
             var duration = (DateTime.UtcNow - startTime).TotalMilliseconds;
 

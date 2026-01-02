@@ -62,6 +62,9 @@ builder.Services.AddScoped<ITaxCalculationService, TaxCalculationService>();
 // Register Early Retirement Service as scoped
 builder.Services.AddScoped<IEarlyRetirementService, EarlyRetirementService>();
 
+// Register Roth Conversion Service as scoped
+builder.Services.AddScoped<IRothConversionService, RothConversionService>();
+
 // Register Withdrawal Calculation Service as scoped
 builder.Services.AddScoped<IWithdrawalCalculationService, WithdrawalCalculationService>();
 

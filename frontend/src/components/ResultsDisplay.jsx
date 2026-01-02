@@ -52,6 +52,80 @@ function ResultsDisplay({ results, onCalculateAgain }) {
         </div>
       )}
 
+      {results.rothConversionAnalysis && (
+        <div className={`roth-conversion-strategy ${results.rothConversionAnalysis.isRecommended ? 'recommended' : 'not-recommended'}`}>
+          <div className="strategy-header">
+            <div className="strategy-icon">{results.rothConversionAnalysis.isRecommended ? '✅' : 'ℹ️'}</div>
+            <h3>{results.rothConversionAnalysis.isRecommended ? 'Roth Conversion Ladder: Recommended Strategy' : 'Roth Conversion Ladder: Analysis'}</h3>
+          </div>
+
+          <div className="strategy-content">
+            <div className="strategy-comparison">
+              <div className="comparison-card penalty-approach">
+                <h4>Standard Penalty Approach</h4>
+                <div className="comparison-amount">{formatCurrency(results.rothConversionAnalysis.totalPenaltyCost)}</div>
+                <p>Total cost (penalties + taxes)</p>
+              </div>
+
+              <div className="comparison-vs">vs</div>
+
+              <div className="comparison-card conversion-approach">
+                <h4>Roth Conversion Ladder</h4>
+                <div className="comparison-amount">{formatCurrency(results.rothConversionAnalysis.totalConversionTaxCost)}</div>
+                <p>Total conversion taxes</p>
+              </div>
+            </div>
+
+            {results.rothConversionAnalysis.isRecommended && (
+              <div className="savings-highlight">
+                <span className="savings-label">Estimated Savings:</span>
+                <span className="savings-amount">{formatCurrency(results.rothConversionAnalysis.estimatedSavings)}</span>
+              </div>
+            )}
+
+            <div className="strategy-explanation">
+              <p>{results.rothConversionAnalysis.strategyExplanation}</p>
+            </div>
+
+            {results.rothConversionAnalysis.transitionWarning && (
+              <div className="transition-warning">
+                <h4>Transition Period</h4>
+                <p>{results.rothConversionAnalysis.transitionWarning}</p>
+              </div>
+            )}
+
+            {results.rothConversionAnalysis.conversionSchedule && results.rothConversionAnalysis.conversionSchedule.length > 0 && (
+              <div className="conversion-schedule">
+                <h4>Year-by-Year Conversion Schedule</h4>
+                <div className="schedule-table">
+                  <div className="schedule-header">
+                    <span>Year</span>
+                    <span>Age</span>
+                    <span>Convert</span>
+                    <span>Tax</span>
+                    <span>Available</span>
+                  </div>
+                  {results.rothConversionAnalysis.conversionSchedule.slice(0, 10).map((year) => (
+                    <div key={year.year} className="schedule-row">
+                      <span>{year.year}</span>
+                      <span>{year.age}</span>
+                      <span>{formatCurrency(year.conversionAmount)}</span>
+                      <span>{formatCurrency(year.conversionTax)}</span>
+                      <span>{formatCurrency(year.availableForWithdrawal)}</span>
+                    </div>
+                  ))}
+                  {results.rothConversionAnalysis.conversionSchedule.length > 10 && (
+                    <div className="schedule-note">
+                      Showing first 10 years of {results.rothConversionAnalysis.conversionSchedule.length} total years
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className="results-grid">
         <div className="result-card primary">
           <div className="result-icon">📊</div>

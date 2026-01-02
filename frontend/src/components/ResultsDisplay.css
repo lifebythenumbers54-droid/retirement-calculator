@@ -665,4 +665,361 @@
     font-size: 1rem;
     padding: 0.875rem 1.5rem;
   }
+
+  .strategy-comparison {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .comparison-vs {
+    font-size: 1rem;
+  }
+
+  .schedule-table {
+    overflow-x: auto;
+  }
+
+  .schedule-header,
+  .schedule-row {
+    font-size: 0.85rem;
+    gap: 0.5rem;
+  }
+}
+
+/* Roth Conversion Ladder Strategy Styles */
+.roth-conversion-strategy {
+  background: rgba(59, 130, 246, 0.1);
+  border: 2px solid rgba(59, 130, 246, 0.4);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  animation: slideIn 0.5s ease-out;
+}
+
+.roth-conversion-strategy.recommended {
+  background: rgba(74, 222, 128, 0.1);
+  border-color: rgba(74, 222, 128, 0.4);
+}
+
+.strategy-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.strategy-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.strategy-header h3 {
+  font-size: 1.3rem;
+  color: #60a5fa;
+  margin: 0;
+}
+
+.roth-conversion-strategy.recommended .strategy-header h3 {
+  color: #4ade80;
+}
+
+.strategy-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.strategy-comparison {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.comparison-card {
+  flex: 1;
+  min-width: 200px;
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.comparison-card.penalty-approach {
+  border-color: rgba(251, 146, 60, 0.4);
+  background: rgba(251, 146, 60, 0.05);
+}
+
+.comparison-card.conversion-approach {
+  border-color: rgba(74, 222, 128, 0.4);
+  background: rgba(74, 222, 128, 0.05);
+}
+
+.comparison-card h4 {
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 0.75rem;
+}
+
+.comparison-amount {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.comparison-card.penalty-approach .comparison-amount {
+  color: #fb923c;
+}
+
+.comparison-card.conversion-approach .comparison-amount {
+  color: #4ade80;
+}
+
+.comparison-card p {
+  font-size: 0.9rem;
+  color: #888;
+  margin: 0;
+}
+
+.comparison-vs {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #888;
+}
+
+.savings-highlight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: rgba(74, 222, 128, 0.15);
+  border: 2px solid rgba(74, 222, 128, 0.4);
+  border-radius: 8px;
+}
+
+.savings-label {
+  font-size: 1rem;
+  color: #ccc;
+}
+
+.savings-amount {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #4ade80;
+}
+
+.strategy-explanation {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border-left: 4px solid #60a5fa;
+}
+
+.roth-conversion-strategy.recommended .strategy-explanation {
+  border-left-color: #4ade80;
+}
+
+.strategy-explanation p {
+  color: #ccc;
+  line-height: 1.8;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.transition-warning {
+  padding: 1rem;
+  background: rgba(251, 146, 60, 0.1);
+  border: 1px solid rgba(251, 146, 60, 0.3);
+  border-radius: 8px;
+}
+
+.transition-warning h4 {
+  font-size: 1rem;
+  color: #fb923c;
+  margin-bottom: 0.75rem;
+}
+
+.transition-warning p {
+  color: #ccc;
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.conversion-schedule {
+  margin-top: 1rem;
+}
+
+.conversion-schedule h4 {
+  font-size: 1.1rem;
+  color: #60a5fa;
+  margin-bottom: 1rem;
+}
+
+.roth-conversion-strategy.recommended .conversion-schedule h4 {
+  color: #4ade80;
+}
+
+.schedule-table {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.schedule-header,
+.schedule-row {
+  display: grid;
+  grid-template-columns: 60px 60px 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 0.75rem;
+  align-items: center;
+}
+
+.schedule-header {
+  font-weight: 700;
+  color: #60a5fa;
+  border-bottom: 2px solid rgba(96, 165, 250, 0.3);
+  margin-bottom: 0.5rem;
+}
+
+.roth-conversion-strategy.recommended .schedule-header {
+  color: #4ade80;
+  border-bottom-color: rgba(74, 222, 128, 0.3);
+}
+
+.schedule-row {
+  color: #ccc;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.schedule-row:last-child {
+  border-bottom: none;
+}
+
+.schedule-row span:nth-child(3),
+.schedule-row span:nth-child(4),
+.schedule-row span:nth-child(5) {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+}
+
+.schedule-note {
+  text-align: center;
+  color: #888;
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Light mode adjustments for Roth conversion */
+.light-mode .roth-conversion-strategy {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.light-mode .roth-conversion-strategy.recommended {
+  background: rgba(74, 222, 128, 0.08);
+  border-color: rgba(74, 222, 128, 0.3);
+}
+
+.light-mode .strategy-header h3 {
+  color: #2563eb;
+}
+
+.light-mode .roth-conversion-strategy.recommended .strategy-header h3 {
+  color: #16a34a;
+}
+
+.light-mode .comparison-card {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .comparison-card h4,
+.light-mode .comparison-card p {
+  color: #666;
+}
+
+.light-mode .comparison-amount {
+  color: #1f2937;
+}
+
+.light-mode .comparison-card.penalty-approach .comparison-amount {
+  color: #ea580c;
+}
+
+.light-mode .comparison-card.conversion-approach .comparison-amount {
+  color: #16a34a;
+}
+
+.light-mode .savings-highlight {
+  background: rgba(74, 222, 128, 0.12);
+  border-color: rgba(74, 222, 128, 0.4);
+}
+
+.light-mode .savings-label {
+  color: #374151;
+}
+
+.light-mode .savings-amount {
+  color: #16a34a;
+}
+
+.light-mode .strategy-explanation {
+  background: rgba(0, 0, 0, 0.02);
+  border-left-color: #2563eb;
+}
+
+.light-mode .roth-conversion-strategy.recommended .strategy-explanation {
+  border-left-color: #16a34a;
+}
+
+.light-mode .strategy-explanation p,
+.light-mode .transition-warning p,
+.light-mode .schedule-row {
+  color: #374151;
+}
+
+.light-mode .transition-warning {
+  background: rgba(251, 146, 60, 0.08);
+  border-color: rgba(251, 146, 60, 0.3);
+}
+
+.light-mode .transition-warning h4 {
+  color: #ea580c;
+}
+
+.light-mode .conversion-schedule h4,
+.light-mode .schedule-header {
+  color: #2563eb;
+}
+
+.light-mode .roth-conversion-strategy.recommended .conversion-schedule h4,
+.light-mode .roth-conversion-strategy.recommended .schedule-header {
+  color: #16a34a;
+}
+
+.light-mode .schedule-table {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.light-mode .schedule-header {
+  border-bottom-color: rgba(37, 99, 235, 0.2);
+}
+
+.light-mode .roth-conversion-strategy.recommended .schedule-header {
+  border-bottom-color: rgba(22, 163, 74, 0.2);
+}
+
+.light-mode .schedule-row {
+  border-bottom-color: rgba(0, 0, 0, 0.05);
+}
+
+.light-mode .schedule-note {
+  color: #666;
 }

@@ -1,3 +1,5 @@
+using RetirementCalculator.API.Services;
+
 namespace RetirementCalculator.API.Models;
 
 /// <summary>
@@ -79,4 +81,9 @@ public class CalculationResult
     /// Explanation of early withdrawal penalty
     /// </summary>
     public string PenaltyExplanation { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Roth IRA conversion ladder strategy analysis (if applicable for early retirement)
+    /// </summary>
+    public RothConversionAnalysis? RothConversionAnalysis { get; set; }
 }

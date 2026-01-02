@@ -12,6 +12,9 @@ public class WithdrawalCalculationService : IWithdrawalCalculationService
     private const decimal STOCK_ALLOCATION = 0.60m;
     private const decimal BOND_ALLOCATION = 0.40m;
 
+    // Store stock allocation for custom allocations
+    private decimal _currentStockAllocation = STOCK_ALLOCATION;
+
     public WithdrawalCalculationService(
         IHistoricalDataService historicalDataService,
         ITaxCalculationService taxCalculationService,
@@ -243,5 +246,244 @@ public class WithdrawalCalculationService : IWithdrawalCalculationService
             totalWithdrawalNeeded, taxableWithdrawal, taxDeferredWithdrawal);
 
         return (taxableWithdrawal, taxDeferredWithdrawal);
+    }
+
+    public async Task<CalculationResult> FindOptimalWithdrawalRateAsync(
+        decimal retirementAccountBalance,
+        decimal taxableAccountBalance,
+        int retirementYears,
+        decimal targetSuccessRate,
+        decimal stockAllocation)
+    {
+        // Set the stock allocation for this calculation
+        _currentStockAllocation = stockAllocation;
+
+        var totalBalance = retirementAccountBalance + taxableAccountBalance;
+
+        // Find optimal withdrawal rate using binary search
+        var optimalWithdrawalRate = await FindOptimalWithdrawalRateWithAllocation(
+            totalBalance,
+            retirementYears,
+            targetSuccessRate * 100, // Convert to percentage
+            stockAllocation);
+
+        var annualGrossWithdrawal = totalBalance * optimalWithdrawalRate;
+
+        // Calculate tax-optimized withdrawal amounts from each account
+        var (taxableWithdrawal, taxDeferredWithdrawal) = CalculateTaxOptimizedWithdrawal(
+            annualGrossWithdrawal,
+            taxableAccountBalance,
+            retirementAccountBalance);
+
+        // Calculate detailed tax breakdown
+        var ordinaryIncomeTax = _taxCalculationService.CalculateOrdinaryIncomeTax(taxDeferredWithdrawal);
+        var capitalGainsTax = _taxCalculationService.CalculateLongTermCapitalGainsTax(taxableWithdrawal, taxDeferredWithdrawal);
+        var totalTax = ordinaryIncomeTax + capitalGainsTax;
+        var effectiveTaxRate = annualGrossWithdrawal > 0 ? (totalTax / annualGrossWithdrawal) * 100 : 0;
+
+        var result = new CalculationResult
+        {
+            WithdrawalRate = optimalWithdrawalRate * 100, // Convert to percentage
+            AnnualGrossWithdrawal = annualGrossWithdrawal,
+            EstimatedAnnualTaxes = totalTax,
+            NetAnnualIncome = annualGrossWithdrawal - totalTax,
+            AchievedSuccessRate = await CalculateSuccessRateWithAllocation(totalBalance, retirementYears, optimalWithdrawalRate, stockAllocation),
+            NumberOfScenariosSimulated = GetNumberOfScenarios(retirementYears),
+            TaxableAccountWithdrawal = taxableWithdrawal,
+            TaxDeferredAccountWithdrawal = taxDeferredWithdrawal,
+            OrdinaryIncomeTax = ordinaryIncomeTax,
+            CapitalGainsTax = capitalGainsTax,
+            EffectiveTaxRate = effectiveTaxRate
+        };
+
+        // Reset to default allocation
+        _currentStockAllocation = STOCK_ALLOCATION;
+
+        return result;
+    }
+
+    public async Task<PortfolioStatistics> CalculatePortfolioStatisticsAsync(
+        decimal retirementAccountBalance,
+        decimal taxableAccountBalance,
+        int retirementYears,
+        decimal withdrawalRate,
+        decimal stockAllocation)
+    {
+        return await Task.Run(() =>
+        {
+            var totalBalance = retirementAccountBalance + taxableAccountBalance;
+            var historicalData = _historicalDataService.GetHistoricalData();
+            var (minYear, maxYear) = _historicalDataService.GetYearRange();
+
+            var finalValues = new List<decimal>();
+
+            // Rolling window analysis
+            for (int startYear = minYear; startYear <= maxYear - retirementYears; startYear++)
+            {
+                var finalValue = SimulateRetirementWithFinalValue(totalBalance, withdrawalRate, startYear, retirementYears, stockAllocation);
+                finalValues.Add(finalValue);
+            }
+
+            finalValues.Sort();
+
+            return new PortfolioStatistics
+            {
+                MedianFinalValue = finalValues.Count > 0 ? finalValues[finalValues.Count / 2] : 0,
+                WorstCaseValue = finalValues.Count > 0 ? finalValues.First() : 0,
+                BestCaseValue = finalValues.Count > 0 ? finalValues.Last() : 0
+            };
+        });
+    }
+
+    private async Task<decimal> FindOptimalWithdrawalRateWithAllocation(
+        decimal totalBalance,
+        int retirementYears,
+        decimal targetSuccessRate,
+        decimal stockAllocation)
+    {
+        // Binary search for optimal withdrawal rate
+        decimal minRate = 0.01m; // 1%
+        decimal maxRate = 0.15m; // 15%
+        decimal tolerance = 0.0001m; // 0.01%
+        decimal bestRate = minRate;
+
+        while (maxRate - minRate > tolerance)
+        {
+            decimal midRate = (minRate + maxRate) / 2;
+            decimal successRate = await CalculateSuccessRateWithAllocation(totalBalance, retirementYears, midRate, stockAllocation);
+
+            if (successRate >= targetSuccessRate)
+            {
+                // Success rate is high enough, try withdrawing more
+                bestRate = midRate;
+                minRate = midRate;
+            }
+            else
+            {
+                // Success rate too low, need to withdraw less
+                maxRate = midRate;
+            }
+        }
+
+        return bestRate;
+    }
+
+    private async Task<decimal> CalculateSuccessRateWithAllocation(
+        decimal initialBalance,
+        int retirementYears,
+        decimal withdrawalRate,
+        decimal stockAllocation)
+    {
+        return await Task.Run(() =>
+        {
+            var historicalData = _historicalDataService.GetHistoricalData();
+            var (minYear, maxYear) = _historicalDataService.GetYearRange();
+
+            int successfulScenarios = 0;
+            int totalScenarios = 0;
+
+            // Rolling window analysis
+            for (int startYear = minYear; startYear <= maxYear - retirementYears; startYear++)
+            {
+                if (SimulateRetirementWithAllocation(initialBalance, withdrawalRate, startYear, retirementYears, stockAllocation))
+                {
+                    successfulScenarios++;
+                }
+                totalScenarios++;
+            }
+
+            return totalScenarios > 0 ? (decimal)successfulScenarios / totalScenarios * 100 : 0;
+        });
+    }
+
+    private bool SimulateRetirementWithAllocation(
+        decimal initialBalance,
+        decimal withdrawalRate,
+        int startYear,
+        int retirementYears,
+        decimal stockAllocation)
+    {
+        decimal balance = initialBalance;
+        decimal annualWithdrawal = initialBalance * withdrawalRate;
+        decimal bondAllocation = 1 - stockAllocation;
+
+        for (int year = 0; year < retirementYears; year++)
+        {
+            int historicalYear = startYear + year;
+            var marketData = _historicalDataService.GetDataForYear(historicalYear);
+
+            if (marketData == null)
+            {
+                return false;
+            }
+
+            // Take withdrawal at beginning of year
+            balance -= annualWithdrawal;
+
+            // Check if portfolio is depleted
+            if (balance <= 0)
+            {
+                return false;
+            }
+
+            // Calculate portfolio return based on allocation
+            decimal portfolioReturn =
+                (stockAllocation * marketData.Sp500Return) +
+                (bondAllocation * marketData.BondReturn);
+
+            // Apply returns
+            balance *= (1 + portfolioReturn);
+
+            // Adjust withdrawal for inflation
+            annualWithdrawal *= (1 + marketData.Inflation);
+        }
+
+        // Success if we still have money left
+        return balance > 0;
+    }
+
+    private decimal SimulateRetirementWithFinalValue(
+        decimal initialBalance,
+        decimal withdrawalRate,
+        int startYear,
+        int retirementYears,
+        decimal stockAllocation)
+    {
+        decimal balance = initialBalance;
+        decimal annualWithdrawal = initialBalance * withdrawalRate;
+        decimal bondAllocation = 1 - stockAllocation;
+
+        for (int year = 0; year < retirementYears; year++)
+        {
+            int historicalYear = startYear + year;
+            var marketData = _historicalDataService.GetDataForYear(historicalYear);
+
+            if (marketData == null)
+            {
+                return 0;
+            }
+
+            // Take withdrawal at beginning of year
+            balance -= annualWithdrawal;
+
+            // Check if portfolio is depleted
+            if (balance <= 0)
+            {
+                return 0;
+            }
+
+            // Calculate portfolio return based on allocation
+            decimal portfolioReturn =
+                (stockAllocation * marketData.Sp500Return) +
+                (bondAllocation * marketData.BondReturn);
+
+            // Apply returns
+            balance *= (1 + portfolioReturn);
+
+            // Adjust withdrawal for inflation
+            annualWithdrawal *= (1 + marketData.Inflation);
+        }
+
+        return balance;
     }
 }

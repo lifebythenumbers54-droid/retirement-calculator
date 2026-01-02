@@ -203,6 +203,46 @@ export const analyzeAllocations = async (inputData) => {
 };
 
 /**
+ * Reverse calculator: Calculate required portfolio size from desired after-tax income
+ * Includes automatic retry logic for network errors and 5xx errors
+ *
+ * @param {Object} inputData - Reverse calculation input data
+ * @param {number} inputData.desiredAfterTaxIncome - Desired annual after-tax income
+ * @param {number} inputData.currentAge - Current age (18-100)
+ * @param {number} inputData.retirementAge - Retirement age (>= current age)
+ * @param {number} inputData.successRateThreshold - Success rate (0.85-0.98)
+ * @param {number} [inputData.currentRetirementAccountBalance] - Optional current savings in retirement accounts
+ * @param {number} [inputData.currentTaxableAccountBalance] - Optional current savings in taxable accounts
+ * @param {number} [inputData.annualSavings] - Optional annual savings amount
+ * @param {string} [inputData.preferredRiskProfile] - Optional: "Conservative", "Moderate", or "Aggressive"
+ * @returns {Promise<Object>} Reverse calculation results with scenarios and gap analysis
+ * @throws {Error} Formatted error with user-friendly message
+ */
+export const calculateReverseRetirement = async (inputData) => {
+  try {
+    const startTime = performance.now();
+
+    const response = await retryWithBackoff(async () => {
+      return await apiClient.post('/Calculation/reverse', inputData);
+    });
+
+    const endTime = performance.now();
+    const duration = endTime - startTime;
+
+    if (import.meta.env.DEV) {
+      console.log(`[API Performance] Reverse calculation completed in ${duration.toFixed(2)}ms`);
+    }
+
+    return response.data;
+  } catch (error) {
+    const userMessage = formatErrorMessage(error);
+    const enhancedError = new Error(userMessage);
+    enhancedError.originalError = error;
+    throw enhancedError;
+  }
+};
+
+/**
  * Health check endpoint to verify API connectivity
  * @returns {Promise<Object>} API status
  * @throws {Error} Formatted error with user-friendly message

@@ -71,6 +71,9 @@ builder.Services.AddScoped<IWithdrawalCalculationService, WithdrawalCalculationS
 // Register Allocation Analysis Service as scoped
 builder.Services.AddScoped<IAllocationAnalysisService, AllocationAnalysisService>();
 
+// Register Reverse Retirement Calculation Service as scoped
+builder.Services.AddScoped<IReverseRetirementCalculationService, ReverseRetirementCalculationService>();
+
 // Configure CORS
 builder.Services.AddCors(options =>
 {

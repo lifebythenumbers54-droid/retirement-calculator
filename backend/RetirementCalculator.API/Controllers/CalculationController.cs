@@ -16,19 +16,22 @@ public class CalculationController : ControllerBase
     private readonly IEarlyRetirementService _earlyRetirementService;
     private readonly IRothConversionService _rothConversionService;
     private readonly IAllocationAnalysisService _allocationAnalysisService;
+    private readonly IReverseRetirementCalculationService _reverseCalculationService;
 
     public CalculationController(
         ILogger<CalculationController> logger,
         IWithdrawalCalculationService calculationService,
         IEarlyRetirementService earlyRetirementService,
         IRothConversionService rothConversionService,
-        IAllocationAnalysisService allocationAnalysisService)
+        IAllocationAnalysisService allocationAnalysisService,
+        IReverseRetirementCalculationService reverseCalculationService)
     {
         _logger = logger;
         _calculationService = calculationService;
         _earlyRetirementService = earlyRetirementService;
         _rothConversionService = rothConversionService;
         _allocationAnalysisService = allocationAnalysisService;
+        _reverseCalculationService = reverseCalculationService;
     }
 
     /// <summary>
@@ -192,6 +195,59 @@ public class CalculationController : ControllerBase
                 message = "An error occurred while processing your request. Please try again later.",
                 error = ex.Message
             });
+        }
+    }
+
+    /// <summary>
+    /// Reverse calculator: Calculate required portfolio size from desired after-tax retirement income
+    /// </summary>
+    /// <param name="input">Reverse calculation input including desired income and risk profile</param>
+    /// <returns>Required portfolio sizes for different risk profiles</returns>
+    /// <response code="200">Returns the reverse calculation result</response>
+    /// <response code="400">If the input data is invalid</response>
+    /// <response code="500">If an internal server error occurs</response>
+    [HttpPost("reverse")]
+    [ProducesResponseType(typeof(ReverseCalculationResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> ReverseCalculate([FromBody] ReverseCalculationInput input)
+    {
+        var startTime = DateTime.UtcNow;
+
+        try
+        {
+            _logger.LogInformation(
+                "Reverse calculation requested: Desired after-tax income ${Income}, Age {CurrentAge} -> {RetirementAge}, Success rate {SuccessRate}%",
+                input.DesiredAfterTaxIncome,
+                input.CurrentAge,
+                input.RetirementAge,
+                input.SuccessRateThreshold * 100);
+
+            // Validate retirement age is after current age
+            if (input.RetirementAge <= input.CurrentAge)
+            {
+                return BadRequest(new { error = "Retirement age must be greater than current age" });
+            }
+
+            var result = await _reverseCalculationService.CalculateRequiredPortfolioAsync(input);
+
+            var duration = DateTime.UtcNow - startTime;
+            _logger.LogInformation(
+                "Reverse calculation completed in {Duration}ms. Scenarios calculated: {ScenarioCount}",
+                duration.TotalMilliseconds,
+                result.Scenarios.Count);
+
+            return Ok(result);
+        }
+        catch (ArgumentException ex)
+        {
+            _logger.LogWarning("Invalid input for reverse calculation: {Message}", ex.Message);
+            return BadRequest(new { error = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during reverse calculation");
+            return StatusCode(500, new { error = "An error occurred while calculating required portfolio. Please try again later." });
         }
     }
 }

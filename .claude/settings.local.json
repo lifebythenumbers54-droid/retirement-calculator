@@ -7,7 +7,18 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(gh repo create:*)",
-      "Bash(where gh:*)"
+      "Bash(where gh:*)",
+      "Bash(gh label create:*)",
+      "Bash(gh label:*)",
+      "Bash(gh milestone create:*)",
+      "Bash(gh milestone:*)",
+      "Bash(__NEW_LINE__ echo \"Milestones created!\")",
+      "Bash(gh api:*)",
+      "Bash(__NEW_LINE__ echo \"Milestones created via API!\")",
+      "Bash(gh issue create:*)",
+      "Bash(gh issue list:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh issue close:*)"
     ]
   }
 }

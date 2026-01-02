@@ -30,6 +30,27 @@ function ResultsDisplay({ results, onCalculateAgain }) {
     <div className="results-display-container">
       <h2>Your Retirement Withdrawal Strategy</h2>
 
+      {results.penaltyWarning && (
+        <div className="early-retirement-warning">
+          <div className="warning-icon">⚠️</div>
+          <div className="warning-content">
+            <h3>Early Retirement Penalty Notice</h3>
+            <p>{results.penaltyWarning}</p>
+            <div className="penalty-summary">
+              <div className="penalty-stat">
+                <span className="penalty-label">Years with Penalty:</span>
+                <span className="penalty-value">{results.yearsWithPenalty}</span>
+              </div>
+              <div className="penalty-stat">
+                <span className="penalty-label">Total Penalty Cost:</span>
+                <span className="penalty-value">{formatCurrency(results.earlyWithdrawalPenalty)}</span>
+              </div>
+            </div>
+            <p className="penalty-explanation">{results.penaltyExplanation}</p>
+          </div>
+        </div>
+      )}
+
       <div className="results-grid">
         <div className="result-card primary">
           <div className="result-icon">📊</div>
@@ -112,6 +133,12 @@ function ResultsDisplay({ results, onCalculateAgain }) {
               <span className="tax-label">Long-Term Capital Gains Tax:</span>
               <span className="tax-value">{formatCurrency(results.capitalGainsTax)}</span>
             </div>
+            {results.yearsWithPenalty > 0 && (
+              <div className="tax-detail-row penalty-row">
+                <span className="tax-label">Early Withdrawal Penalty (Annual):</span>
+                <span className="tax-value">{formatCurrency(results.earlyWithdrawalPenalty / results.yearsWithPenalty)}</span>
+              </div>
+            )}
             <div className="tax-detail-row total">
               <span className="tax-label">Total Tax:</span>
               <span className="tax-value">{formatCurrency(results.estimatedAnnualTaxes)}</span>

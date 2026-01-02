@@ -59,4 +59,24 @@ public class CalculationResult
     /// Effective tax rate as a percentage of gross withdrawal
     /// </summary>
     public decimal EffectiveTaxRate { get; set; }
+
+    /// <summary>
+    /// Total early withdrawal penalty for retiring before age 59.5
+    /// </summary>
+    public decimal EarlyWithdrawalPenalty { get; set; }
+
+    /// <summary>
+    /// Number of years subject to early withdrawal penalty
+    /// </summary>
+    public int YearsWithPenalty { get; set; }
+
+    /// <summary>
+    /// Warning message for early retirement (if applicable)
+    /// </summary>
+    public string? PenaltyWarning { get; set; }
+
+    /// <summary>
+    /// Explanation of early withdrawal penalty
+    /// </summary>
+    public string PenaltyExplanation { get; set; } = string.Empty;
 }

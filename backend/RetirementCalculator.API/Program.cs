@@ -13,6 +13,9 @@ builder.Services.AddSingleton<IHistoricalDataService, HistoricalDataService>();
 // Register Tax Calculation Service as scoped
 builder.Services.AddScoped<ITaxCalculationService, TaxCalculationService>();
 
+// Register Early Retirement Service as scoped
+builder.Services.AddScoped<IEarlyRetirementService, EarlyRetirementService>();
+
 // Register Withdrawal Calculation Service as scoped
 builder.Services.AddScoped<IWithdrawalCalculationService, WithdrawalCalculationService>();
 

@@ -13,13 +13,16 @@ public class CalculationController : ControllerBase
 {
     private readonly ILogger<CalculationController> _logger;
     private readonly IWithdrawalCalculationService _calculationService;
+    private readonly IEarlyRetirementService _earlyRetirementService;
 
     public CalculationController(
         ILogger<CalculationController> logger,
-        IWithdrawalCalculationService calculationService)
+        IWithdrawalCalculationService calculationService,
+        IEarlyRetirementService earlyRetirementService)
     {
         _logger = logger;
         _calculationService = calculationService;
+        _earlyRetirementService = earlyRetirementService;
     }
 
     /// <summary>
@@ -68,14 +71,26 @@ public class CalculationController : ControllerBase
             // Perform actual calculation using historical data
             var result = await _calculationService.CalculateWithdrawalStrategy(userInput);
 
+            // Calculate early retirement penalties
+            var retirementYears = 95 - userInput.RetirementAge; // Assume living to 95
+            var (totalPenalty, yearsWithPenalty) = _earlyRetirementService.CalculateTotalPenalties(
+                userInput.RetirementAge,
+                retirementYears,
+                result.TaxDeferredAccountWithdrawal);
+
+            result.EarlyWithdrawalPenalty = totalPenalty;
+            result.YearsWithPenalty = yearsWithPenalty;
+            result.PenaltyWarning = _earlyRetirementService.GetPenaltyWarning(userInput.RetirementAge);
+            result.PenaltyExplanation = _earlyRetirementService.GetPenaltyExplanation(yearsWithPenalty, totalPenalty);
+
             var duration = (DateTime.UtcNow - startTime).TotalMilliseconds;
 
             _logger.LogInformation(
                 "Calculation completed successfully in {Duration}ms - WithdrawalRate: {WithdrawalRate}%, " +
                 "AnnualGrossWithdrawal: {AnnualGrossWithdrawal}, NetAnnualIncome: {NetAnnualIncome}, " +
-                "AchievedSuccessRate: {AchievedSuccessRate}%",
+                "AchievedSuccessRate: {AchievedSuccessRate}%, EarlyWithdrawalPenalty: {EarlyWithdrawalPenalty}",
                 duration, result.WithdrawalRate, result.AnnualGrossWithdrawal,
-                result.NetAnnualIncome, result.AchievedSuccessRate
+                result.NetAnnualIncome, result.AchievedSuccessRate, result.EarlyWithdrawalPenalty
             );
 
             return Ok(result);

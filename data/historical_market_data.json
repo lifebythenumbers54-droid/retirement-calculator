@@ -1,0 +1,602 @@
+[
+  {
+    "year": 1925,
+    "sp500Return": 0.297,
+    "bondReturn": 0.052,
+    "inflation": 0.035
+  },
+  {
+    "year": 1926,
+    "sp500Return": 0.116,
+    "bondReturn": 0.043,
+    "inflation": -0.011
+  },
+  {
+    "year": 1927,
+    "sp500Return": 0.374,
+    "bondReturn": 0.061,
+    "inflation": -0.022
+  },
+  {
+    "year": 1928,
+    "sp500Return": 0.436,
+    "bondReturn": 0.048,
+    "inflation": -0.012
+  },
+  {
+    "year": 1929,
+    "sp500Return": -0.083,
+    "bondReturn": 0.054,
+    "inflation": 0.006
+  },
+  {
+    "year": 1930,
+    "sp500Return": -0.249,
+    "bondReturn": 0.068,
+    "inflation": -0.061
+  },
+  {
+    "year": 1931,
+    "sp500Return": -0.434,
+    "bondReturn": 0.032,
+    "inflation": -0.093
+  },
+  {
+    "year": 1932,
+    "sp500Return": -0.082,
+    "bondReturn": 0.084,
+    "inflation": -0.103
+  },
+  {
+    "year": 1933,
+    "sp500Return": 0.539,
+    "bondReturn": 0.047,
+    "inflation": 0.005
+  },
+  {
+    "year": 1934,
+    "sp500Return": -0.015,
+    "bondReturn": 0.072,
+    "inflation": 0.015
+  },
+  {
+    "year": 1935,
+    "sp500Return": 0.476,
+    "bondReturn": 0.049,
+    "inflation": 0.030
+  },
+  {
+    "year": 1936,
+    "sp500Return": 0.339,
+    "bondReturn": 0.046,
+    "inflation": 0.011
+  },
+  {
+    "year": 1937,
+    "sp500Return": -0.350,
+    "bondReturn": 0.052,
+    "inflation": 0.029
+  },
+  {
+    "year": 1938,
+    "sp500Return": 0.311,
+    "bondReturn": 0.061,
+    "inflation": -0.021
+  },
+  {
+    "year": 1939,
+    "sp500Return": -0.005,
+    "bondReturn": 0.053,
+    "inflation": 0.000
+  },
+  {
+    "year": 1940,
+    "sp500Return": -0.099,
+    "bondReturn": 0.064,
+    "inflation": 0.007
+  },
+  {
+    "year": 1941,
+    "sp500Return": -0.116,
+    "bondReturn": 0.041,
+    "inflation": 0.096
+  },
+  {
+    "year": 1942,
+    "sp500Return": 0.207,
+    "bondReturn": 0.038,
+    "inflation": 0.092
+  },
+  {
+    "year": 1943,
+    "sp500Return": 0.258,
+    "bondReturn": 0.039,
+    "inflation": 0.030
+  },
+  {
+    "year": 1944,
+    "sp500Return": 0.197,
+    "bondReturn": 0.041,
+    "inflation": 0.023
+  },
+  {
+    "year": 1945,
+    "sp500Return": 0.364,
+    "bondReturn": 0.043,
+    "inflation": 0.022
+  },
+  {
+    "year": 1946,
+    "sp500Return": -0.082,
+    "bondReturn": 0.038,
+    "inflation": 0.182
+  },
+  {
+    "year": 1947,
+    "sp500Return": 0.057,
+    "bondReturn": 0.035,
+    "inflation": 0.090
+  },
+  {
+    "year": 1948,
+    "sp500Return": 0.055,
+    "bondReturn": 0.042,
+    "inflation": 0.030
+  },
+  {
+    "year": 1949,
+    "sp500Return": 0.188,
+    "bondReturn": 0.046,
+    "inflation": -0.020
+  },
+  {
+    "year": 1950,
+    "sp500Return": 0.317,
+    "bondReturn": 0.038,
+    "inflation": 0.058
+  },
+  {
+    "year": 1951,
+    "sp500Return": 0.240,
+    "bondReturn": 0.034,
+    "inflation": 0.058
+  },
+  {
+    "year": 1952,
+    "sp500Return": 0.184,
+    "bondReturn": 0.041,
+    "inflation": 0.009
+  },
+  {
+    "year": 1953,
+    "sp500Return": -0.010,
+    "bondReturn": 0.048,
+    "inflation": 0.006
+  },
+  {
+    "year": 1954,
+    "sp500Return": 0.526,
+    "bondReturn": 0.039,
+    "inflation": -0.005
+  },
+  {
+    "year": 1955,
+    "sp500Return": 0.316,
+    "bondReturn": 0.031,
+    "inflation": 0.037
+  },
+  {
+    "year": 1956,
+    "sp500Return": 0.067,
+    "bondReturn": 0.034,
+    "inflation": 0.029
+  },
+  {
+    "year": 1957,
+    "sp500Return": -0.108,
+    "bondReturn": 0.062,
+    "inflation": 0.029
+  },
+  {
+    "year": 1958,
+    "sp500Return": 0.434,
+    "bondReturn": 0.041,
+    "inflation": 0.018
+  },
+  {
+    "year": 1959,
+    "sp500Return": 0.120,
+    "bondReturn": 0.034,
+    "inflation": 0.015
+  },
+  {
+    "year": 1960,
+    "sp500Return": 0.003,
+    "bondReturn": 0.079,
+    "inflation": 0.015
+  },
+  {
+    "year": 1961,
+    "sp500Return": 0.269,
+    "bondReturn": 0.046,
+    "inflation": 0.007
+  },
+  {
+    "year": 1962,
+    "sp500Return": -0.087,
+    "bondReturn": 0.068,
+    "inflation": 0.012
+  },
+  {
+    "year": 1963,
+    "sp500Return": 0.226,
+    "bondReturn": 0.042,
+    "inflation": 0.012
+  },
+  {
+    "year": 1964,
+    "sp500Return": 0.165,
+    "bondReturn": 0.047,
+    "inflation": 0.013
+  },
+  {
+    "year": 1965,
+    "sp500Return": 0.124,
+    "bondReturn": 0.045,
+    "inflation": 0.019
+  },
+  {
+    "year": 1966,
+    "sp500Return": -0.100,
+    "bondReturn": 0.051,
+    "inflation": 0.034
+  },
+  {
+    "year": 1967,
+    "sp500Return": 0.240,
+    "bondReturn": 0.043,
+    "inflation": 0.030
+  },
+  {
+    "year": 1968,
+    "sp500Return": 0.110,
+    "bondReturn": 0.058,
+    "inflation": 0.042
+  },
+  {
+    "year": 1969,
+    "sp500Return": -0.085,
+    "bondReturn": 0.061,
+    "inflation": 0.061
+  },
+  {
+    "year": 1970,
+    "sp500Return": 0.040,
+    "bondReturn": 0.081,
+    "inflation": 0.055
+  },
+  {
+    "year": 1971,
+    "sp500Return": 0.143,
+    "bondReturn": 0.093,
+    "inflation": 0.033
+  },
+  {
+    "year": 1972,
+    "sp500Return": 0.190,
+    "bondReturn": 0.068,
+    "inflation": 0.034
+  },
+  {
+    "year": 1973,
+    "sp500Return": -0.146,
+    "bondReturn": 0.071,
+    "inflation": 0.087
+  },
+  {
+    "year": 1974,
+    "sp500Return": -0.265,
+    "bondReturn": 0.069,
+    "inflation": 0.123
+  },
+  {
+    "year": 1975,
+    "sp500Return": 0.372,
+    "bondReturn": 0.092,
+    "inflation": 0.068
+  },
+  {
+    "year": 1976,
+    "sp500Return": 0.238,
+    "bondReturn": 0.125,
+    "inflation": 0.048
+  },
+  {
+    "year": 1977,
+    "sp500Return": -0.072,
+    "bondReturn": 0.081,
+    "inflation": 0.067
+  },
+  {
+    "year": 1978,
+    "sp500Return": 0.066,
+    "bondReturn": 0.087,
+    "inflation": 0.090
+  },
+  {
+    "year": 1979,
+    "sp500Return": 0.184,
+    "bondReturn": 0.098,
+    "inflation": 0.133
+  },
+  {
+    "year": 1980,
+    "sp500Return": 0.324,
+    "bondReturn": 0.114,
+    "inflation": 0.124
+  },
+  {
+    "year": 1981,
+    "sp500Return": -0.049,
+    "bondReturn": 0.149,
+    "inflation": 0.087
+  },
+  {
+    "year": 1982,
+    "sp500Return": 0.214,
+    "bondReturn": 0.401,
+    "inflation": 0.039
+  },
+  {
+    "year": 1983,
+    "sp500Return": 0.225,
+    "bondReturn": 0.082,
+    "inflation": 0.038
+  },
+  {
+    "year": 1984,
+    "sp500Return": 0.063,
+    "bondReturn": 0.157,
+    "inflation": 0.040
+  },
+  {
+    "year": 1985,
+    "sp500Return": 0.316,
+    "bondReturn": 0.309,
+    "inflation": 0.036
+  },
+  {
+    "year": 1986,
+    "sp500Return": 0.186,
+    "bondReturn": 0.245,
+    "inflation": 0.011
+  },
+  {
+    "year": 1987,
+    "sp500Return": 0.052,
+    "bondReturn": 0.027,
+    "inflation": 0.044
+  },
+  {
+    "year": 1988,
+    "sp500Return": 0.165,
+    "bondReturn": 0.086,
+    "inflation": 0.042
+  },
+  {
+    "year": 1989,
+    "sp500Return": 0.316,
+    "bondReturn": 0.181,
+    "inflation": 0.046
+  },
+  {
+    "year": 1990,
+    "sp500Return": -0.031,
+    "bondReturn": 0.089,
+    "inflation": 0.061
+  },
+  {
+    "year": 1991,
+    "sp500Return": 0.304,
+    "bondReturn": 0.193,
+    "inflation": 0.031
+  },
+  {
+    "year": 1992,
+    "sp500Return": 0.076,
+    "bondReturn": 0.080,
+    "inflation": 0.029
+  },
+  {
+    "year": 1993,
+    "sp500Return": 0.100,
+    "bondReturn": 0.180,
+    "inflation": 0.027
+  },
+  {
+    "year": 1994,
+    "sp500Return": 0.013,
+    "bondReturn": -0.029,
+    "inflation": 0.026
+  },
+  {
+    "year": 1995,
+    "sp500Return": 0.375,
+    "bondReturn": 0.234,
+    "inflation": 0.025
+  },
+  {
+    "year": 1996,
+    "sp500Return": 0.230,
+    "bondReturn": 0.035,
+    "inflation": 0.033
+  },
+  {
+    "year": 1997,
+    "sp500Return": 0.331,
+    "bondReturn": 0.096,
+    "inflation": 0.017
+  },
+  {
+    "year": 1998,
+    "sp500Return": 0.285,
+    "bondReturn": 0.131,
+    "inflation": 0.016
+  },
+  {
+    "year": 1999,
+    "sp500Return": 0.210,
+    "bondReturn": -0.008,
+    "inflation": 0.027
+  },
+  {
+    "year": 2000,
+    "sp500Return": -0.091,
+    "bondReturn": 0.117,
+    "inflation": 0.034
+  },
+  {
+    "year": 2001,
+    "sp500Return": -0.119,
+    "bondReturn": 0.055,
+    "inflation": 0.016
+  },
+  {
+    "year": 2002,
+    "sp500Return": -0.221,
+    "bondReturn": 0.105,
+    "inflation": 0.024
+  },
+  {
+    "year": 2003,
+    "sp500Return": 0.287,
+    "bondReturn": 0.042,
+    "inflation": 0.019
+  },
+  {
+    "year": 2004,
+    "sp500Return": 0.109,
+    "bondReturn": 0.043,
+    "inflation": 0.033
+  },
+  {
+    "year": 2005,
+    "sp500Return": 0.049,
+    "bondReturn": 0.029,
+    "inflation": 0.034
+  },
+  {
+    "year": 2006,
+    "sp500Return": 0.158,
+    "bondReturn": 0.040,
+    "inflation": 0.025
+  },
+  {
+    "year": 2007,
+    "sp500Return": 0.055,
+    "bondReturn": 0.099,
+    "inflation": 0.041
+  },
+  {
+    "year": 2008,
+    "sp500Return": -0.370,
+    "bondReturn": 0.052,
+    "inflation": 0.001
+  },
+  {
+    "year": 2009,
+    "sp500Return": 0.265,
+    "bondReturn": 0.059,
+    "inflation": 0.027
+  },
+  {
+    "year": 2010,
+    "sp500Return": 0.151,
+    "bondReturn": 0.064,
+    "inflation": 0.015
+  },
+  {
+    "year": 2011,
+    "sp500Return": 0.021,
+    "bondReturn": 0.078,
+    "inflation": 0.030
+  },
+  {
+    "year": 2012,
+    "sp500Return": 0.160,
+    "bondReturn": 0.021,
+    "inflation": 0.017
+  },
+  {
+    "year": 2013,
+    "sp500Return": 0.322,
+    "bondReturn": -0.020,
+    "inflation": 0.015
+  },
+  {
+    "year": 2014,
+    "sp500Return": 0.136,
+    "bondReturn": 0.060,
+    "inflation": 0.008
+  },
+  {
+    "year": 2015,
+    "sp500Return": 0.014,
+    "bondReturn": 0.006,
+    "inflation": 0.001
+  },
+  {
+    "year": 2016,
+    "sp500Return": 0.119,
+    "bondReturn": 0.026,
+    "inflation": 0.021
+  },
+  {
+    "year": 2017,
+    "sp500Return": 0.217,
+    "bondReturn": 0.035,
+    "inflation": 0.021
+  },
+  {
+    "year": 2018,
+    "sp500Return": -0.044,
+    "bondReturn": 0.001,
+    "inflation": 0.019
+  },
+  {
+    "year": 2019,
+    "sp500Return": 0.311,
+    "bondReturn": 0.086,
+    "inflation": 0.018
+  },
+  {
+    "year": 2020,
+    "sp500Return": 0.184,
+    "bondReturn": 0.075,
+    "inflation": 0.012
+  },
+  {
+    "year": 2021,
+    "sp500Return": 0.288,
+    "bondReturn": -0.025,
+    "inflation": 0.070
+  },
+  {
+    "year": 2022,
+    "sp500Return": -0.182,
+    "bondReturn": -0.130,
+    "inflation": 0.065
+  },
+  {
+    "year": 2023,
+    "sp500Return": 0.263,
+    "bondReturn": 0.053,
+    "inflation": 0.033
+  },
+  {
+    "year": 2024,
+    "sp500Return": 0.251,
+    "bondReturn": 0.021,
+    "inflation": 0.029
+  }
+]

@@ -1,0 +1,174 @@
+RETIREMENT CALCULATOR - FRONTEND PROJECT STRUCTURE
+==================================================
+
+Location: C:\ClaudeCode\Projects\Tester2\frontend
+
+frontend/
+│
+├── 📁 public/                          Static assets served directly
+│   └── vite.svg                        Vite logo (favicon)
+│
+├── 📁 src/                             Source code directory
+│   │
+│   ├── 📁 components/                  React components (ready for next phase)
+│   │   └── .gitkeep                    Directory placeholder
+│   │
+│   ├── 📁 services/                    API and service layer
+│   │   ├── .gitkeep                    Directory placeholder
+│   │   └── apiClient.js                Axios-based API client ⭐
+│   │
+│   ├── App.jsx                         Main application component ⭐
+│   ├── App.css                         Application-specific styles
+│   ├── main.jsx                        React entry point (renders App)
+│   └── index.css                       Global styles
+│
+├── 📄 Configuration Files
+│   ├── package.json                    Dependencies and npm scripts ⭐
+│   ├── vite.config.js                  Vite configuration with proxy ⭐
+│   ├── index.html                      HTML template
+│   └── .gitignore                      Git ignore patterns
+│
+├── 📄 Setup Scripts
+│   ├── setup.bat                       Windows installation script
+│   └── setup.sh                        Unix/Linux/Mac installation script
+│
+└── 📄 Documentation
+    ├── README.md                       Main project documentation
+    ├── SETUP_COMPLETE.md               Setup completion details
+    ├── INITIALIZATION_SUMMARY.md       Detailed initialization report
+    └── PROJECT_STRUCTURE.txt           This file
+
+⭐ = Key file for understanding the project
+
+DIRECTORY PURPOSES
+==================
+
+public/
+  Purpose: Static assets that are served directly without processing
+  Contents: Favicon, images, fonts (if added later)
+  Access: Available at root URL (e.g., /vite.svg)
+
+src/components/
+  Purpose: Reusable React components
+  Status: Empty, ready for next phase
+  Planned: InputForm.jsx, ResultsDisplay.jsx, Visualization.jsx
+
+src/services/
+  Purpose: API clients, data services, utility functions
+  Contents: apiClient.js (Axios-based API communication)
+  Planned: Additional services as needed
+
+KEY FILES
+=========
+
+1. package.json
+   - Defines all project dependencies
+   - Contains npm scripts (dev, build, preview)
+   - Project metadata
+
+2. vite.config.js
+   - Vite build configuration
+   - Dev server settings (port 3000)
+   - API proxy configuration (proxies /api/* to http://localhost:5000)
+
+3. src/main.jsx
+   - Application entry point
+   - Renders App component into DOM
+   - Enables React Strict Mode
+
+4. src/App.jsx
+   - Root React component
+   - Contains header, main content area, and footer
+   - Placeholder UI for next phase
+
+5. src/services/apiClient.js
+   - Exports calculateRetirement() function
+   - Exports checkApiHealth() function
+   - Handles API errors
+
+DEPENDENCIES
+============
+
+Production:
+  - react@^18.3.1               Core React library
+  - react-dom@^18.3.1           React DOM rendering
+  - axios@^1.7.9                HTTP client for API calls
+  - recharts@^2.15.0            Charting library
+
+Development:
+  - vite@^6.0.5                 Build tool and dev server
+  - @vitejs/plugin-react@^4.3.4 React support for Vite
+
+NPM SCRIPTS
+===========
+
+npm run dev
+  - Starts development server on port 3000
+  - Enables hot module replacement
+  - Proxies /api/* to http://localhost:5000
+
+npm run build
+  - Creates optimized production build
+  - Output directory: dist/
+
+npm run preview
+  - Previews production build locally
+
+INSTALLATION
+============
+
+Step 1: Install dependencies
+  cd C:\ClaudeCode\Projects\Tester2\frontend
+  npm install
+
+Step 2: Start dev server
+  npm run dev
+
+Step 3: Open browser
+  http://localhost:3000
+
+NEXT PHASE COMPONENTS
+=====================
+
+The following components will be added to src/components/:
+
+1. InputForm.jsx
+   - User input form with all MVP fields
+   - Client-side validation
+   - Form submission handling
+   - Integration with apiClient.js
+
+2. ResultsDisplay.jsx
+   - Display calculation results
+   - Show withdrawal recommendations
+   - Tax breakdown section
+   - Success rate information
+
+3. Visualization.jsx
+   - Recharts-based visualizations
+   - Portfolio sustainability chart
+   - Success rate gauge
+   - Interactive tooltips
+
+API PROXY FLOW
+==============
+
+Frontend Request → Vite Dev Server → Backend API
+http://localhost:3000/api/calculate → http://localhost:5000/api/calculate
+
+This proxy configuration:
+  ✓ Avoids CORS issues during development
+  ✓ Simplifies API calls (no need for full URLs)
+  ✓ Mimics production routing
+
+CURRENT STATUS
+==============
+
+Phase 1: Frontend Setup - ✓ COMPLETE
+
+Ready for Phase 2: Input Form Components
+
+All files created: 17
+Total lines of code: ~400+
+Documentation: Comprehensive
+Testing: Manual testing required after npm install

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import InputForm from './components/InputForm'
+import ResultsDisplay from './components/ResultsDisplay'
 
 function App() {
   const [isCalculated, setIsCalculated] = useState(false)
@@ -9,6 +10,11 @@ function App() {
   const handleCalculationComplete = (results) => {
     setCalculationResults(results)
     setIsCalculated(true)
+  }
+
+  const handleCalculateAgain = () => {
+    setIsCalculated(false)
+    setCalculationResults(null)
   }
 
   return (
@@ -25,27 +31,10 @@ function App() {
           {!isCalculated ? (
             <InputForm onCalculationComplete={handleCalculationComplete} />
           ) : (
-            <div className="placeholder-section">
-              <h2>Results Display</h2>
-              <p className="placeholder-text">
-                Calculation results and visualizations will be displayed here.
-              </p>
-              <button
-                onClick={() => setIsCalculated(false)}
-                style={{
-                  padding: '0.75rem 1.5rem',
-                  fontSize: '1rem',
-                  background: '#646cff',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  marginTop: '1rem'
-                }}
-              >
-                Calculate Again
-              </button>
-            </div>
+            <ResultsDisplay
+              results={calculationResults}
+              onCalculateAgain={handleCalculateAgain}
+            />
           )}
         </div>
       </main>

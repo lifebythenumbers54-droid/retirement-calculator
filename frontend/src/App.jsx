@@ -96,7 +96,7 @@ function App() {
             ) : (
               // Reverse Calculator Flow
               !isCalculated ? (
-                <ReverseInputForm onCalculate={handleCalculationComplete} />
+                <ReverseInputForm onCalculationComplete={handleCalculationComplete} />
               ) : (
                 <ReverseResultsDisplay
                   results={calculationResults}

@@ -169,12 +169,12 @@ function AllocationAnalysis({ inputData, onBack }) {
           )}
 
           <div className="analysis-actions">
-            <button onClick={onBack} className="back-button">
+            <button onClick={onBack} className="btn-secondary back-button">
               Back to Results
             </button>
             <button
               onClick={handleAnalyze}
-              className="analyze-button"
+              className="btn-primary analyze-button"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -247,12 +247,12 @@ function AllocationAnalysis({ inputData, onBack }) {
       </div>
 
       <div className="analysis-actions bottom-actions">
-        <button onClick={onBack} className="back-button">
+        <button onClick={onBack} className="btn-secondary back-button">
           Back to Results
         </button>
         <button
           onClick={handleAnalyze}
-          className="reanalyze-button"
+          className="btn-primary reanalyze-button"
           disabled={isLoading}
         >
           Re-analyze

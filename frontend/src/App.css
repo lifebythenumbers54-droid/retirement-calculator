@@ -1,3 +1,605 @@
+/* ===== Common Button Styles ===== */
+.btn-primary,
+.btn-secondary {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  color: white;
+  background: linear-gradient(135deg, #646cff 0%, #535bf2 100%);
+  box-shadow: 0 4px 6px rgba(100, 108, 255, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #535bf2 0%, #4449e6 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(100, 108, 255, 0.4);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-secondary {
+  color: white;
+  background: #646cff;
+  box-shadow: 0 4px 6px rgba(100, 108, 255, 0.2);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #535bf2;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(100, 108, 255, 0.3);
+}
+
+.btn-secondary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Common spinner for buttons */
+.btn-primary .spinner,
+.btn-secondary .spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: btn-spin 0.6s linear infinite;
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .btn-primary {
+    background: linear-gradient(135deg, #535bf2 0%, #4449e6 100%);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #646cff 0%, #535bf2 100%);
+  }
+
+  .btn-secondary {
+    background: #535bf2;
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    background: #646cff;
+  }
+}
+
+@media (max-width: 768px) {
+  .btn-primary,
+  .btn-secondary {
+    font-size: 1rem;
+    padding: 0.875rem 1.5rem;
+  }
+}
+
+/* ===== Component-specific Button Overrides ===== */
+/* Full-width buttons for forms and results */
+.submit-button,
+.calculate-button,
+.calculate-again-button {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* Reverse Input Form Styles */
+.reverse-input-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.reverse-input-form .form-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(100, 108, 255, 0.2);
+}
+
+.reverse-input-form .form-section h3 {
+  font-size: 1.2rem;
+  color: #646cff;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(100, 108, 255, 0.2);
+}
+
+.reverse-input-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.reverse-input-form .form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.reverse-input-form .form-group input,
+.reverse-input-form .form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 2px solid #444;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.reverse-input-form .form-group input:focus,
+.reverse-input-form .form-group select:focus {
+  outline: none;
+  border-color: #646cff;
+}
+
+.reverse-input-form .form-group input.error,
+.reverse-input-form .form-group select.error {
+  border-color: #ff4444;
+}
+
+.reverse-input-form .form-group small {
+  display: block;
+  margin-top: 0.25rem;
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.reverse-input-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.reverse-input-form .error-message {
+  color: #ff4444;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.reverse-input-form .section-description {
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.reverse-input-form .optional-section {
+  border-color: rgba(100, 108, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.reverse-input-form .api-error {
+  background: rgba(255, 68, 68, 0.1);
+  border: 2px solid #ff4444;
+  border-radius: 6px;
+  padding: 1rem;
+  color: #ff4444;
+  margin-bottom: 1rem;
+}
+
+/* Reverse Results Display Styles */
+.results-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.results-container .results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.results-container .results-header h2 {
+  font-size: 2rem;
+  color: #646cff;
+  margin: 0;
+}
+
+.results-container .results-header .calculate-again-button {
+  width: auto;
+  margin-top: 0;
+}
+
+.results-container .summary-section {
+  background: rgba(100, 108, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.results-container .summary-section h3 {
+  color: #646cff;
+  margin-bottom: 1rem;
+}
+
+.results-container .summary-text {
+  color: #ccc;
+  line-height: 1.6;
+}
+
+.results-container .scenarios-section h3 {
+  color: #646cff;
+  margin-bottom: 1.5rem;
+}
+
+.results-container .scenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.results-container .scenario-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid #444;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.results-container .scenario-header {
+  padding: 1rem 1.5rem;
+  color: white;
+}
+
+.results-container .scenario-header h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+}
+
+.results-container .allocation-badge {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.results-container .scenario-body {
+  padding: 1.5rem;
+}
+
+.results-container .metric-highlight {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(100, 108, 255, 0.1);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.results-container .metric-label {
+  display: block;
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.results-container .metric-value-large {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #646cff;
+}
+
+.results-container .metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.results-container .metric {
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 6px;
+}
+
+.results-container .metric-value {
+  display: block;
+  font-weight: 600;
+  color: #fff;
+}
+
+.results-container .outcomes-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.results-container .outcomes-section h5 {
+  color: #888;
+  margin-bottom: 0.75rem;
+}
+
+.results-container .warning-box {
+  background: rgba(251, 146, 60, 0.1);
+  border: 1px solid rgba(251, 146, 60, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.results-container .warning-box strong {
+  color: #fb923c;
+}
+
+.results-container .warning-box p {
+  color: #ccc;
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.results-container .roth-recommendation {
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.results-container .roth-recommendation h5 {
+  color: #4ade80;
+  margin-bottom: 0.5rem;
+}
+
+.results-container .roth-recommendation p {
+  color: #ccc;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.results-container .metric-value.savings {
+  color: #4ade80;
+}
+
+.results-container .recommendation-box {
+  background: rgba(100, 108, 255, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.results-container .recommendation-box p {
+  color: #ccc;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.results-container .gap-analysis-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+}
+
+.results-container .gap-analysis-section h3 {
+  color: #646cff;
+  margin-bottom: 1.5rem;
+}
+
+.results-container .gap-summary {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.results-container .gap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.results-container .gap-card {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.results-container .gap-card h4 {
+  margin-bottom: 0.75rem;
+}
+
+.results-container .gap-amount {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.results-container .gap-negative {
+  color: #ff6b6b;
+}
+
+.results-container .gap-positive {
+  color: #4ade80;
+}
+
+.results-container .gap-target {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.results-container .savings-roadmap {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.results-container .savings-roadmap h4 {
+  color: #646cff;
+  margin-bottom: 1rem;
+}
+
+.results-container .roadmap-intro {
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.results-container .roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.results-container .roadmap-item {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+}
+
+.results-container .roadmap-item h5 {
+  margin-bottom: 0.5rem;
+}
+
+.results-container .roadmap-success {
+  color: #4ade80;
+}
+
+.results-container .roadmap-warning {
+  color: #fb923c;
+}
+
+.results-container .roadmap-action {
+  color: #ccc;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.results-container .roadmap-recommendation {
+  padding: 1rem;
+  background: rgba(100, 108, 255, 0.1);
+  border-radius: 8px;
+  margin-top: 1rem;
+  color: #ccc;
+}
+
+.results-container .error-message {
+  text-align: center;
+  padding: 2rem;
+}
+
+.results-container .error-message p {
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+@media (prefers-color-scheme: light) {
+  .reverse-input-form .form-section {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: rgba(83, 91, 242, 0.2);
+  }
+
+  .reverse-input-form .form-section h3 {
+    color: #535bf2;
+    border-bottom-color: rgba(83, 91, 242, 0.2);
+  }
+
+  .reverse-input-form .form-group label {
+    color: #213547;
+  }
+
+  .reverse-input-form .form-group input,
+  .reverse-input-form .form-group select {
+    border-color: #ccc;
+    background: white;
+    color: #213547;
+  }
+
+  .reverse-input-form .form-group input:focus,
+  .reverse-input-form .form-group select:focus {
+    border-color: #535bf2;
+  }
+
+  .results-container .results-header h2,
+  .results-container .summary-section h3,
+  .results-container .scenarios-section h3,
+  .results-container .gap-analysis-section h3,
+  .results-container .savings-roadmap h4 {
+    color: #535bf2;
+  }
+
+  .results-container .summary-text,
+  .results-container .recommendation-box p,
+  .results-container .roadmap-recommendation {
+    color: #333;
+  }
+
+  .results-container .scenario-card {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: #ccc;
+  }
+
+  .results-container .metric-value-large {
+    color: #535bf2;
+  }
+
+  .results-container .metric-value {
+    color: #213547;
+  }
+}
+
+@media (max-width: 768px) {
+  .reverse-input-form .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .results-container .results-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .results-container .results-header .calculate-again-button {
+    width: 100%;
+  }
+
+  .results-container .scenarios-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .results-container .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .results-container .gap-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .results-container .roadmap-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== App Layout Styles ===== */
 .app-container {
   max-width: 1200px;
   margin: 0 auto;

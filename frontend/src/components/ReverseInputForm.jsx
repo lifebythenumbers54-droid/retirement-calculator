@@ -341,7 +341,7 @@ const ReverseInputForm = ({ onCalculationComplete }) => {
 
       <button
         type="submit"
-        className="calculate-button"
+        className="btn-primary calculate-button"
         disabled={isLoading}
       >
         {isLoading ? (

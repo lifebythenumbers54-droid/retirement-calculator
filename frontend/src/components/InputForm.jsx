@@ -237,7 +237,7 @@ function InputForm({ onCalculationComplete }) {
           </div>
         )}
 
-        <button type="submit" className="submit-button" disabled={isLoading}>
+        <button type="submit" className="btn-primary submit-button" disabled={isLoading}>
           {isLoading ? (
             <>
               <span className="spinner"></span>

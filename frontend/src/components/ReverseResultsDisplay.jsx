@@ -6,7 +6,7 @@ const ReverseResultsDisplay = ({ results, onCalculateAgain }) => {
       <div className="results-container">
         <div className="error-message">
           <p>No results available. Please try again with different inputs.</p>
-          <button onClick={onCalculateAgain} className="calculate-again-button">
+          <button onClick={onCalculateAgain} className="btn-secondary calculate-again-button">
             Calculate Again
           </button>
         </div>
@@ -44,7 +44,7 @@ const ReverseResultsDisplay = ({ results, onCalculateAgain }) => {
     <div className="results-container">
       <div className="results-header">
         <h2>Required Portfolio Analysis</h2>
-        <button onClick={onCalculateAgain} className="calculate-again-button">
+        <button onClick={onCalculateAgain} className="btn-secondary calculate-again-button">
           Calculate Again
         </button>
       </div>

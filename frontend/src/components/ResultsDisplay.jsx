@@ -264,7 +264,7 @@ function ResultsDisplay({ results, onCalculateAgain, onShowAllocationAnalysis })
             The above results assume a 60/40 stock/bond allocation. Analyze which allocation strategy
             might work best for your specific situation based on historical performance.
           </p>
-          <button onClick={onShowAllocationAnalysis} className="analyze-allocations-button">
+          <button onClick={onShowAllocationAnalysis} className="btn-primary analyze-allocations-button">
             Analyze Optimal Portfolio Allocations
           </button>
         </div>
@@ -283,7 +283,7 @@ function ResultsDisplay({ results, onCalculateAgain, onShowAllocationAnalysis })
         </p>
       </div>
 
-      <button onClick={onCalculateAgain} className="calculate-again-button">
+      <button onClick={onCalculateAgain} className="btn-secondary calculate-again-button">
         Calculate Again
       </button>
     </div>

@@ -1,8 +1,15 @@
 import { useState } from 'react'
 import './App.css'
+import InputForm from './components/InputForm'
 
 function App() {
   const [isCalculated, setIsCalculated] = useState(false)
+  const [calculationResults, setCalculationResults] = useState(null)
+
+  const handleCalculationComplete = (results) => {
+    setCalculationResults(results)
+    setIsCalculated(true)
+  }
 
   return (
     <div className="app-container">
@@ -16,28 +23,28 @@ function App() {
       <main className="app-main">
         <div className="content-wrapper">
           {!isCalculated ? (
-            <div className="placeholder-section">
-              <h2>Input Form</h2>
-              <p className="placeholder-text">
-                The input form component will be added here in the next phase.
-              </p>
-              <div className="placeholder-box">
-                <p>Form fields will include:</p>
-                <ul>
-                  <li>Current age</li>
-                  <li>Retirement age</li>
-                  <li>Retirement account balance (401k/IRA)</li>
-                  <li>Taxable account balance</li>
-                  <li>Success rate threshold</li>
-                </ul>
-              </div>
-            </div>
+            <InputForm onCalculationComplete={handleCalculationComplete} />
           ) : (
             <div className="placeholder-section">
               <h2>Results Display</h2>
               <p className="placeholder-text">
                 Calculation results and visualizations will be displayed here.
               </p>
+              <button
+                onClick={() => setIsCalculated(false)}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  fontSize: '1rem',
+                  background: '#646cff',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  marginTop: '1rem'
+                }}
+              >
+                Calculate Again
+              </button>
             </div>
           )}
         </div>
